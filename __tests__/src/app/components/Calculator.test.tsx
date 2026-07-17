@@ -36,4 +36,18 @@ describe('Calculator', () => {
         expect(screen.getAllByText('負担割合: 50.0%')).toHaveLength(2);
         expect(screen.getAllByText('拠出額: 90,000円')).toHaveLength(2);
     });
+
+    it('端数丸めが発生しても拠出額合計が予算合計と一致する', () => {
+        render(
+            <Calculator
+                budgetItems={[{category: 'other', item: 'テスト', amount: 1, isActive: true}]}
+                totalBudget={1}
+                husbandIncomeDefault={1}
+                wifeIncomeDefault={1}
+            />,
+        );
+
+        expect(screen.getByText('拠出額: 1円')).toBeInTheDocument();
+        expect(screen.getByText('拠出額: 0円')).toBeInTheDocument();
+    });
 });

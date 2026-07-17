@@ -1,5 +1,5 @@
 import Calculator from './components/Calculator';
-import {loadBudgetData} from '../../lib/csv';
+import {loadBudgetData} from '@/lib/csv';
 
 export default async function Home() {
     const budgetData = await loadBudgetData();

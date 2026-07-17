@@ -1,7 +1,7 @@
 'use client';
 
 import {useMemo, useState} from 'react';
-import type {BudgetCsvRow} from '../../../lib/csv';
+import type {BudgetCsvRow} from '@/lib/csv';
 
 interface CalculatorProps {
     budgetItems: BudgetCsvRow[];
@@ -34,12 +34,13 @@ export default function Calculator({
 
         const husbandRatio = husbandIncome / totalIncome;
         const wifeRatio = wifeIncome / totalIncome;
+        const husbandContribution = Math.round(totalBudget * husbandRatio);
 
         return {
             husbandRatio,
             wifeRatio,
-            husbandContribution: Math.round(totalBudget * husbandRatio),
-            wifeContribution: Math.round(totalBudget * wifeRatio),
+            husbandContribution,
+            wifeContribution: totalBudget - husbandContribution,
         };
     }, [husbandIncome, wifeIncome, totalBudget]);
 
