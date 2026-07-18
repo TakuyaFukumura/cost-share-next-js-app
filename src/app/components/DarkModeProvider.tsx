@@ -14,19 +14,24 @@ const DarkModeContext = createContext<DarkModeContextType | undefined>(undefined
 const isTheme = (value: string | null): value is Theme => value === 'light' || value === 'dark';
 
 export function DarkModeProvider({children}: { readonly children: ReactNode }) {
-    const [theme, setTheme] = useState<Theme>(() => {
-        if (typeof window === 'undefined') {
-            return 'light';
-        }
-
-        try {
-            const savedTheme = localStorage.getItem('theme');
-            return isTheme(savedTheme) ? savedTheme : 'light';
-        } catch {
-            return 'light';
-        }
-    });
+    // SSR とクライアントの初期レンダリングを一致させるため、常に 'light' で初期化する。
+    // マウント後に useEffect で localStorage から実際のテーマを読み込む。
+    const [theme, setTheme] = useState<Theme>('light');
     const [isDark, setIsDark] = useState(false);
+
+    useEffect(() => {
+        const loadSavedTheme = () => {
+            try {
+                const savedTheme = localStorage.getItem('theme');
+                if (isTheme(savedTheme)) {
+                    setTheme(savedTheme);
+                }
+            } catch {
+                // localStorage が使用できない環境では何もしない
+            }
+        };
+        loadSavedTheme();
+    }, []);
 
     useEffect(() => {
         const updateTheme = () => {
