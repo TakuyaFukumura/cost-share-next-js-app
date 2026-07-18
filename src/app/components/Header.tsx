@@ -1,9 +1,19 @@
 'use client';
 
+import {useEffect, useState} from 'react';
 import {useDarkMode} from './DarkModeProvider';
 
 export default function Header() {
     const {theme, setTheme} = useDarkMode();
+    // クライアントにマウントされたことを検知するステート。
+    // マウント前はサーバー側と同じデフォルト値（ライトモード）を表示し、
+    // Hydration Error を防ぐ。
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        const syncMounted = () => setMounted(true);
+        syncMounted();
+    }, []);
 
     const handleThemeToggle = () => {
         if (theme === 'light') {
@@ -13,8 +23,11 @@ export default function Header() {
         }
     };
 
+    // マウント前はサーバー側と一致させるためデフォルト（ライトモード）を使用する
+    const currentTheme = mounted ? theme : 'light';
+
     const getThemeIcon = () => {
-        if (theme === 'light') {
+        if (currentTheme === 'light') {
             return '☀️';
         } else {
             return '🌙';
@@ -22,7 +35,7 @@ export default function Header() {
     };
 
     const getThemeLabel = () => {
-        if (theme === 'light') {
+        if (currentTheme === 'light') {
             return 'ライトモード';
         } else {
             return 'ダークモード';
