@@ -18,10 +18,10 @@ describe('Calculator', () => {
 
         expect(screen.getByDisplayValue('230000')).toBeInTheDocument();
         expect(screen.getByDisplayValue('200000')).toBeInTheDocument();
-        expect(screen.getByText('負担割合: 66.7%')).toBeInTheDocument();
-        expect(screen.getByText('拠出額: 120,000円')).toBeInTheDocument();
-        expect(screen.getByText('負担割合: 33.3%')).toBeInTheDocument();
-        expect(screen.getByText('拠出額: 60,000円')).toBeInTheDocument();
+        expect(screen.getByText('負担割合: 53.5%')).toBeInTheDocument();
+        expect(screen.getByText('拠出額: 96,279円')).toBeInTheDocument();
+        expect(screen.getByText('負担割合: 46.5%')).toBeInTheDocument();
+        expect(screen.getByText('拠出額: 83,721円')).toBeInTheDocument();
     });
 
     it('入力変更時に計算結果をリアルタイム更新する', () => {
