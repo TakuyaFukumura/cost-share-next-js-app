@@ -7,7 +7,7 @@ describe('parseBudgetCsv', () => {
 category,item,amount,is_active
 
 fixed_cost,家賃,150000,true
-income_sample,夫基本手取り,400000,false
+income_sample,夫基本手取り,230000,false
 `;
 
         const rows = parseBudgetCsv(csv);

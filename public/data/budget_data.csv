@@ -5,5 +5,5 @@ fixed_cost,光熱費,20000,true
 fixed_cost,食費,50000,true
 investment,共通貯金,30000,true
 investment,投資回し分(高 dividend ETF等),50000,true
-income_sample,夫基本手取り,400000,false
-income_sample,妻基本手取り,300000,false
+income_sample,夫基本手取り,230000,false
+income_sample,妻基本手取り,230000,false
