@@ -29,8 +29,8 @@ export default function Calculator({
                 wifeRatio: 0,
                 husbandContribution: 0,
                 wifeContribution: 0,
-                remainingAfterContribution: 0,
-                remainingAfterBudget: 0,
+                husbandRemaining: 0,
+                wifeRemaining: 0,
             };
         }
 
@@ -43,8 +43,8 @@ export default function Calculator({
             wifeRatio,
             husbandContribution,
             wifeContribution: totalBudget - husbandContribution,
-            remainingAfterContribution: totalIncome - totalBudget,
-            remainingAfterBudget: totalIncome - totalBudget,
+            husbandRemaining: husbandIncome - husbandContribution,
+            wifeRemaining: wifeIncome - (totalBudget - husbandContribution),
         };
     }, [husbandIncome, wifeIncome, totalBudget]);
 
@@ -115,14 +115,14 @@ export default function Calculator({
 
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
                     <h2 className="text-xl font-semibold mb-4">差額サマリ</h2>
-                    <div className="space-y-2">
-                        <div className="flex justify-between">
-                            <span>収入 - 拠出額合計</span>
-                            <span>{formatCurrency(summary.remainingAfterContribution)}</span>
+                    <div className="grid md:grid-cols-2 gap-4">
+                        <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <h3 className="font-medium mb-2">夫</h3>
+                            <p>収入 - 拠出額: {formatCurrency(summary.husbandRemaining)}</p>
                         </div>
-                        <div className="flex justify-between">
-                            <span>合計収入 - 予算合計</span>
-                            <span>{formatCurrency(summary.remainingAfterBudget)}</span>
+                        <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <h3 className="font-medium mb-2">妻</h3>
+                            <p>収入 - 拠出額: {formatCurrency(summary.wifeRemaining)}</p>
                         </div>
                     </div>
                 </section>
