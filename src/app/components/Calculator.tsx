@@ -29,6 +29,9 @@ export default function Calculator({
                 wifeRatio: 0,
                 husbandContribution: 0,
                 wifeContribution: 0,
+                husbandRemaining: 0,
+                wifeRemaining: 0,
+                totalRemaining: 0,
             };
         }
 
@@ -41,6 +44,9 @@ export default function Calculator({
             wifeRatio,
             husbandContribution,
             wifeContribution: totalBudget - husbandContribution,
+            husbandRemaining: husbandIncome - husbandContribution,
+            wifeRemaining: wifeIncome - (totalBudget - husbandContribution),
+            totalRemaining: totalIncome - totalBudget,
         };
     }, [husbandIncome, wifeIncome, totalBudget]);
 
@@ -106,6 +112,24 @@ export default function Calculator({
                             <p>負担割合: {(summary.wifeRatio * 100).toFixed(1)}%</p>
                             <p>拠出額: {formatCurrency(summary.wifeContribution)}</p>
                         </div>
+                    </div>
+                </section>
+
+                <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
+                    <h2 className="text-xl font-semibold mb-4">差額サマリ</h2>
+                    <div className="grid md:grid-cols-2 gap-4">
+                        <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <h3 className="font-medium mb-2">夫</h3>
+                            <p>収入 - 拠出額: {formatCurrency(summary.husbandRemaining)}</p>
+                        </div>
+                        <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <h3 className="font-medium mb-2">妻</h3>
+                            <p>収入 - 拠出額: {formatCurrency(summary.wifeRemaining)}</p>
+                        </div>
+                    </div>
+                    <div className="border-t mt-4 pt-4 font-semibold flex justify-between">
+                        <span>合計差額</span>
+                        <span>{formatCurrency(summary.totalRemaining)}</span>
                     </div>
                 </section>
             </div>
