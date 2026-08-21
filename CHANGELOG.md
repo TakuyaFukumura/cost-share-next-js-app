@@ -5,12 +5,12 @@
 フォーマットは [Keep a Changelog](https://keepachangelog.com/ja/1.0.0/) に基づいており、
 このプロジェクトは [Semantic Versioning](https://semver.org/lang/ja/) に従っています。
 
-## [Unreleased]
+## [0.4.0] - 2026-08-22
 
 ### 変更
 
 - 収入と拠出額の差額サマリを画面下部に追加
-- `CHANGELOG.md` と `package.json` のバージョン表記を更新
+- 夫婦別の差額と合計差額を表示するよう修正
 - `.github/copilot-instructions.md` を追加し、共通運用指示を記録
 
 ## [0.3.0] - 2026-08-21
