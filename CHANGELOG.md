@@ -5,6 +5,12 @@
 フォーマットは [Keep a Changelog](https://keepachangelog.com/ja/1.0.0/) に基づいており、
 このプロジェクトは [Semantic Versioning](https://semver.org/lang/ja/) に従っています。
 
+## [0.4.1] - 2026-08-22
+
+### 追加
+
+- 共通予算マスタデータに「通信費（Wi-Fi）」「水道代」「日用品」を追加
+
 ## [0.4.0] - 2026-08-22
 
 ### 変更
