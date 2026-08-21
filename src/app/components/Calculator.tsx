@@ -71,6 +71,10 @@ export default function Calculator({
                             />
                         </label>
                     </div>
+                    <div className="border-t mt-4 pt-4 font-semibold flex justify-between">
+                        <span>合計収入</span>
+                        <span className="text-lg text-blue-600 dark:text-blue-400">{formatCurrency(husbandIncome + wifeIncome)}</span>
+                    </div>
                 </section>
 
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
