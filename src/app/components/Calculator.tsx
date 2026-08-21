@@ -31,6 +31,7 @@ export default function Calculator({
                 wifeContribution: 0,
                 husbandRemaining: 0,
                 wifeRemaining: 0,
+                totalRemaining: 0,
             };
         }
 
@@ -45,6 +46,7 @@ export default function Calculator({
             wifeContribution: totalBudget - husbandContribution,
             husbandRemaining: husbandIncome - husbandContribution,
             wifeRemaining: wifeIncome - (totalBudget - husbandContribution),
+            totalRemaining: totalIncome - totalBudget,
         };
     }, [husbandIncome, wifeIncome, totalBudget]);
 
@@ -124,6 +126,10 @@ export default function Calculator({
                             <h3 className="font-medium mb-2">妻</h3>
                             <p>収入 - 拠出額: {formatCurrency(summary.wifeRemaining)}</p>
                         </div>
+                    </div>
+                    <div className="border-t mt-4 pt-4 font-semibold flex justify-between">
+                        <span>合計差額</span>
+                        <span>{formatCurrency(summary.totalRemaining)}</span>
                     </div>
                 </section>
             </div>
