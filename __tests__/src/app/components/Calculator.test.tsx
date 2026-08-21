@@ -22,6 +22,9 @@ describe('Calculator', () => {
         expect(screen.getByText('拠出額: 96,279円')).toBeInTheDocument();
         expect(screen.getByText('負担割合: 46.5%')).toBeInTheDocument();
         expect(screen.getByText('拠出額: 83,721円')).toBeInTheDocument();
+        expect(screen.getByText('収入 - 拠出額合計')).toBeInTheDocument();
+        expect(screen.getAllByText('250,000円')).toHaveLength(2);
+        expect(screen.getByText('合計収入 - 予算合計')).toBeInTheDocument();
     });
 
     it('入力変更時に計算結果をリアルタイム更新する', () => {

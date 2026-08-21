@@ -9,7 +9,9 @@
 
 ### 変更
 
-- なし
+- 収入と拠出額の差額サマリを画面下部に追加
+- `CHANGELOG.md` と `package.json` のバージョン表記を更新
+- `.github/copilot-instructions.md` を追加し、共通運用指示を記録
 
 ## [0.3.0] - 2026-08-21
 
