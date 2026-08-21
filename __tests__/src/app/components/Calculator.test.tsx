@@ -27,7 +27,7 @@ describe('Calculator', () => {
         expect(screen.getByText(hasTextContent('収入 - 拠出額: 133,721円'))).toBeInTheDocument();
         expect(screen.getByText(hasTextContent('収入 - 拠出額: 116,279円'))).toBeInTheDocument();
         expect(screen.getByText('合計差額')).toBeInTheDocument();
-        expect(screen.getByText('250,000円')).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('250,000円'))).toBeInTheDocument();
     });
 
     it('入力変更時に計算結果をリアルタイム更新する', () => {
