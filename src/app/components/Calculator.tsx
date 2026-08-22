@@ -5,7 +5,6 @@ import type {BudgetCsvRow} from '@/lib/csv';
 
 interface CalculatorProps {
     budgetItems: BudgetCsvRow[];
-    totalBudget: number;
     husbandIncomeDefault: number;
     wifeIncomeDefault: number;
 }
@@ -16,17 +15,25 @@ const getAmountColorClass = (amount: number) =>
 
 export default function Calculator({
                                        budgetItems,
-                                       totalBudget,
                                        husbandIncomeDefault,
                                        wifeIncomeDefault,
                                    }: Readonly<CalculatorProps>) {
     const [husbandIncome, setHusbandIncome] = useState<number>(husbandIncomeDefault);
     const [wifeIncome, setWifeIncome] = useState<number>(wifeIncomeDefault);
+    const [editableBudgetItems, setEditableBudgetItems] = useState<BudgetCsvRow[]>(budgetItems);
     const [husbandFoodRatio, setHusbandFoodRatio] = useState(55);
     const wifeFoodRatio = 100 - husbandFoodRatio;
-    const foodBudget = budgetItems.find((item) => item.item === '食費')?.amount ?? 0;
+    const totalBudget = editableBudgetItems.reduce((sum, item) => sum + item.amount, 0);
+    const foodBudget = editableBudgetItems.find((item) => item.item === '食費')?.amount ?? 0;
     const husbandFoodContribution = Math.round(foodBudget * (husbandFoodRatio / 100));
     const wifeFoodContribution = foodBudget - husbandFoodContribution;
+
+    const handleBudgetAmountChange = (index: number, value: string) => {
+        const amount = Math.max(0, Number(value) || 0);
+        setEditableBudgetItems((currentItems) => currentItems.map((item, itemIndex) =>
+            itemIndex === index ? {...item, amount} : item,
+        ));
+    };
 
     const summary = useMemo(() => {
         const totalIncome = husbandIncome + wifeIncome;
@@ -96,10 +103,21 @@ export default function Calculator({
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
                     <h2 className="text-xl font-semibold mb-4">共通予算サマリ</h2>
                     <ul className="space-y-2 mb-4">
-                        {budgetItems.map((item) => (
-                            <li key={`${item.category}-${item.item}`} className="flex justify-between">
+                        {editableBudgetItems.map((item, index) => (
+                            <li key={`${item.category}-${item.item}`} className="flex items-center justify-between gap-4">
                                 <span>{item.item}</span>
-                                <span className={getAmountColorClass(item.amount)}>{formatCurrency(item.amount)}</span>
+                                <label className="flex items-center gap-2">
+                                    <input
+                                        type="number"
+                                        min={0}
+                                        step={1}
+                                        value={item.amount}
+                                        onChange={(event) => handleBudgetAmountChange(index, event.target.value)}
+                                        aria-label={`${item.item}の予算`}
+                                        className="w-32 border border-gray-300 dark:border-gray-600 rounded px-3 py-2 text-right bg-white dark:bg-gray-900"
+                                    />
+                                    <span>円</span>
+                                </label>
                             </li>
                         ))}
                     </ul>

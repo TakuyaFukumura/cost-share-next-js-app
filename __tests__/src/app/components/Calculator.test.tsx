@@ -10,7 +10,6 @@ describe('Calculator', () => {
             {category: 'fixed_cost', item: '家賃', amount: 150000, isActive: true},
             {category: 'investment', item: '共通貯金', amount: 30000, isActive: true},
         ],
-        totalBudget: 180000,
         husbandIncomeDefault: 230000,
         wifeIncomeDefault: 200000,
     };
@@ -19,7 +18,7 @@ describe('Calculator', () => {
         render(<Calculator {...props} />);
 
         expect(screen.getByDisplayValue('230000')).toBeInTheDocument();
-        expect(screen.getByDisplayValue('200000')).toBeInTheDocument();
+        expect(screen.getByLabelText('家賃の予算')).toHaveValue(150000);
         expect(screen.getByText('負担割合: 53.5%')).toBeInTheDocument();
         expect(screen.getByText(hasTextContent('拠出額: 96,279円'))).toBeInTheDocument();
         expect(screen.getByText('負担割合: 46.5%')).toBeInTheDocument();
@@ -43,6 +42,17 @@ describe('Calculator', () => {
         expect(screen.getAllByText(hasTextContent('拠出額: 90,000円'))).toHaveLength(2);
     });
 
+    it('共通予算の金額変更を合計と計算結果へ反映する', () => {
+        render(<Calculator {...props} />);
+
+        fireEvent.change(screen.getByLabelText('家賃の予算'), {target: {value: '200000'}});
+
+        expect(screen.getByLabelText('家賃の予算')).toHaveValue(200000);
+        expect(screen.getByText(hasTextContent('230,000円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('123,023円'))).toBeInTheDocument();
+        expect(screen.getAllByText(hasTextContent('106,977円'))).toHaveLength(2);
+    });
+
     it('食費に男女別の負担割合を適用する', () => {
         render(
             <Calculator
@@ -51,7 +61,6 @@ describe('Calculator', () => {
                     {category: 'fixed_cost', item: '食費', amount: 50000, isActive: true},
                     {category: 'fixed_cost', item: '家賃', amount: 150000, isActive: true},
                 ]}
-                totalBudget={200000}
             />,
         );
 
@@ -76,7 +85,6 @@ describe('Calculator', () => {
         render(
             <Calculator
                 budgetItems={[{category: 'other', item: 'テスト', amount: 1, isActive: true}]}
-                totalBudget={1}
                 husbandIncomeDefault={1}
                 wifeIncomeDefault={1}
             />,
