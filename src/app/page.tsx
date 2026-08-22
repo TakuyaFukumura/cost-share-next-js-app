@@ -9,7 +9,6 @@ export default async function Home() {
             <h1 className="text-center text-3xl font-bold mb-6">家計負担割合計算</h1>
             <Calculator
                 budgetItems={budgetData.activeBudgetRows}
-                totalBudget={budgetData.totalBudget}
                 husbandIncomeDefault={budgetData.husbandIncomeDefault}
                 wifeIncomeDefault={budgetData.wifeIncomeDefault}
             />
