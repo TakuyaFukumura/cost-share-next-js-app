@@ -2,6 +2,8 @@ import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
 import Calculator from '@/app/components/Calculator';
 
+const hasTextContent = (text: string) => (_: string, element: Element | null) => element?.textContent === text;
+
 describe('Calculator', () => {
     const props = {
         budgetItems: [
@@ -19,13 +21,13 @@ describe('Calculator', () => {
         expect(screen.getByDisplayValue('230000')).toBeInTheDocument();
         expect(screen.getByDisplayValue('200000')).toBeInTheDocument();
         expect(screen.getByText('負担割合: 53.5%')).toBeInTheDocument();
-        expect(screen.getByText('拠出額: 96,279円')).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('拠出額: 96,279円'))).toBeInTheDocument();
         expect(screen.getByText('負担割合: 46.5%')).toBeInTheDocument();
-        expect(screen.getByText('拠出額: 83,721円')).toBeInTheDocument();
-        expect(screen.getByText('収入 - 拠出額: 133,721円')).toBeInTheDocument();
-        expect(screen.getByText('収入 - 拠出額: 116,279円')).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('拠出額: 83,721円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('収入 - 拠出額: 133,721円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('収入 - 拠出額: 116,279円'))).toBeInTheDocument();
         expect(screen.getByText('合計差額')).toBeInTheDocument();
-        expect(screen.getByText('250,000円')).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('250,000円'))).toBeInTheDocument();
     });
 
     it('入力変更時に計算結果をリアルタイム更新する', () => {
@@ -38,7 +40,7 @@ describe('Calculator', () => {
         fireEvent.change(wifeInput, {target: {value: '230000'}});
 
         expect(screen.getAllByText('負担割合: 50.0%')).toHaveLength(2);
-        expect(screen.getAllByText('拠出額: 90,000円')).toHaveLength(2);
+        expect(screen.getAllByText(hasTextContent('拠出額: 90,000円'))).toHaveLength(2);
     });
 
     it('端数丸めが発生しても拠出額合計が予算合計と一致する', () => {
@@ -51,7 +53,7 @@ describe('Calculator', () => {
             />,
         );
 
-        expect(screen.getByText('拠出額: 1円')).toBeInTheDocument();
-        expect(screen.getByText('拠出額: 0円')).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('拠出額: 1円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('拠出額: 0円'))).toBeInTheDocument();
     });
 });
