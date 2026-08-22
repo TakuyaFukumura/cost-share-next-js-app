@@ -36,3 +36,4 @@ npm test
 - 使用列: `category`, `item`, `amount`, `is_active`
 - `is_active=true` の項目を共通予算合計として扱います
 - `income_sample` カテゴリ（夫/妻）を初期収入値として使用します
+- 食費は画面で設定した男女別の負担割合（初期値は男性55%、女性45%）を使用します

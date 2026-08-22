@@ -43,6 +43,31 @@ describe('Calculator', () => {
         expect(screen.getAllByText(hasTextContent('拠出額: 90,000円'))).toHaveLength(2);
     });
 
+    it('食費に男女別の負担割合を適用する', () => {
+        render(
+            <Calculator
+                {...props}
+                budgetItems={[
+                    {category: 'fixed_cost', item: '食費', amount: 50000, isActive: true},
+                    {category: 'fixed_cost', item: '家賃', amount: 150000, isActive: true},
+                ]}
+                totalBudget={200000}
+            />,
+        );
+
+        expect(screen.getByDisplayValue('55')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('45')).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('拠出額: 107,733円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('拠出額: 92,267円'))).toBeInTheDocument();
+
+        fireEvent.change(screen.getByLabelText('食費の男性負担割合'), {target: {value: '60'}});
+
+        expect(screen.getByDisplayValue('60')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('40')).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('拠出額: 110,233円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('拠出額: 89,767円'))).toBeInTheDocument();
+    });
+
     it('端数丸めが発生しても拠出額合計が予算合計と一致する', () => {
         render(
             <Calculator
