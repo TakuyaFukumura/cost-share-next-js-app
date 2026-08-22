@@ -5,6 +5,12 @@
 フォーマットは [Keep a Changelog](https://keepachangelog.com/ja/1.0.0/) に基づいており、
 このプロジェクトは [Semantic Versioning](https://semver.org/lang/ja/) に従っています。
 
+## [Unreleased]
+
+### 追加
+
+- 開発エージェント向けの共通運用ルールを `AGENTS.md` に追加
+
 ## [0.4.1] - 2026-08-22
 
 ### 追加
