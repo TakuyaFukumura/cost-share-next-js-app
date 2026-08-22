@@ -6,7 +6,7 @@ describe('parseBudgetCsv', () => {
 # comment
 category,item,amount,is_active
 
-fixed_cost,家賃,150000,true
+fixed_cost,家賃,130000,true
 income_sample,夫基本手取り,230000,false
 `;
 
@@ -16,7 +16,7 @@ income_sample,夫基本手取り,230000,false
         expect(rows[0]).toEqual({
             category: 'fixed_cost',
             item: '家賃',
-            amount: 150000,
+            amount: 130000,
             isActive: true,
         });
     });

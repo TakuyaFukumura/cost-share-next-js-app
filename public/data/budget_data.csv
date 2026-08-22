@@ -1,6 +1,6 @@
 # 家計共通予算マスタデータ
 category,item,amount,is_active
-fixed_cost,家賃,150000,true
+fixed_cost,家賃,130000,true
 fixed_cost,光熱費,20000,true
 fixed_cost,通信費（Wi-Fi）,5000,true
 fixed_cost,水道代,3000,true
