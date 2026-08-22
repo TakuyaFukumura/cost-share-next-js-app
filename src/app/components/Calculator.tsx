@@ -24,6 +24,9 @@ export default function Calculator({
     const [wifeIncome, setWifeIncome] = useState<number>(wifeIncomeDefault);
     const [husbandFoodRatio, setHusbandFoodRatio] = useState(55);
     const wifeFoodRatio = 100 - husbandFoodRatio;
+    const foodBudget = budgetItems.find((item) => item.item === '食費')?.amount ?? 0;
+    const husbandFoodContribution = Math.round(foodBudget * (husbandFoodRatio / 100));
+    const wifeFoodContribution = foodBudget - husbandFoodContribution;
 
     const summary = useMemo(() => {
         const totalIncome = husbandIncome + wifeIncome;
@@ -41,7 +44,6 @@ export default function Calculator({
 
         const husbandRatio = husbandIncome / totalIncome;
         const wifeRatio = wifeIncome / totalIncome;
-        const foodBudget = budgetItems.find((item) => item.item === '食費')?.amount ?? 0;
         const otherBudget = totalBudget - foodBudget;
         const husbandContribution = Math.round(
             otherBudget * husbandRatio + foodBudget * (husbandFoodRatio / 100),
@@ -56,7 +58,7 @@ export default function Calculator({
             wifeRemaining: wifeIncome - (totalBudget - husbandContribution),
             totalRemaining: totalIncome - totalBudget,
         };
-    }, [budgetItems, husbandFoodRatio, husbandIncome, totalBudget, wifeIncome]);
+    }, [foodBudget, husbandFoodRatio, husbandIncome, totalBudget, wifeIncome]);
 
     return (
         <div className="max-w-3xl mx-auto p-4 md:p-8">
@@ -129,6 +131,9 @@ export default function Calculator({
                                 />
                                 <span>%</span>
                             </div>
+                            <span className="text-sm text-gray-600 dark:text-gray-300">
+                                負担額: {formatCurrency(husbandFoodContribution)}
+                            </span>
                         </label>
                         <label className="flex flex-col gap-2">
                             <span className="text-sm text-gray-600 dark:text-gray-300">女性（妻）</span>
@@ -147,6 +152,9 @@ export default function Calculator({
                                 />
                                 <span>%</span>
                             </div>
+                            <span className="text-sm text-gray-600 dark:text-gray-300">
+                                負担額: {formatCurrency(wifeFoodContribution)}
+                            </span>
                         </label>
                     </div>
                 </section>

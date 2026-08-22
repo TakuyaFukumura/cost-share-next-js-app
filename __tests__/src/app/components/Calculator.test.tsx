@@ -57,6 +57,8 @@ describe('Calculator', () => {
 
         expect(screen.getByDisplayValue('55')).toBeInTheDocument();
         expect(screen.getByDisplayValue('45')).toBeInTheDocument();
+        expect(screen.getByText('負担額: 27,500円')).toBeInTheDocument();
+        expect(screen.getByText('負担額: 22,500円')).toBeInTheDocument();
         expect(screen.getByText(hasTextContent('拠出額: 107,733円'))).toBeInTheDocument();
         expect(screen.getByText(hasTextContent('拠出額: 92,267円'))).toBeInTheDocument();
 
@@ -64,6 +66,8 @@ describe('Calculator', () => {
 
         expect(screen.getByDisplayValue('60')).toBeInTheDocument();
         expect(screen.getByDisplayValue('40')).toBeInTheDocument();
+        expect(screen.getByText('負担額: 30,000円')).toBeInTheDocument();
+        expect(screen.getByText('負担額: 20,000円')).toBeInTheDocument();
         expect(screen.getByText(hasTextContent('拠出額: 110,233円'))).toBeInTheDocument();
         expect(screen.getByText(hasTextContent('拠出額: 89,767円'))).toBeInTheDocument();
     });
