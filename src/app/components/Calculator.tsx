@@ -71,10 +71,10 @@ export default function Calculator({
         <div className="max-w-3xl mx-auto p-4 md:p-8">
             <div className="space-y-6">
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
-                    <h2 className="text-xl font-semibold mb-4">収入入力フォーム</h2>
+                    <h2 className="text-xl font-semibold mb-4">手取り月収</h2>
                     <div className="grid md:grid-cols-2 gap-4">
                         <label className="flex flex-col gap-2">
-                            <span className="text-sm text-gray-600 dark:text-gray-300">夫の当月手取り収入</span>
+                            <span className="text-sm text-gray-600 dark:text-gray-300">夫</span>
                             <input
                                 type="number"
                                 min={0}
@@ -84,7 +84,7 @@ export default function Calculator({
                             />
                         </label>
                         <label className="flex flex-col gap-2">
-                            <span className="text-sm text-gray-600 dark:text-gray-300">妻の当月手取り収入</span>
+                            <span className="text-sm text-gray-600 dark:text-gray-300">妻</span>
                             <input
                                 type="number"
                                 min={0}

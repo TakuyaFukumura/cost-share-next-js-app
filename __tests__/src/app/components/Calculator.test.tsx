@@ -32,8 +32,8 @@ describe('Calculator', () => {
     it('入力変更時に計算結果をリアルタイム更新する', () => {
         render(<Calculator {...props} />);
 
-        const husbandInput = screen.getByLabelText('夫の当月手取り収入');
-        const wifeInput = screen.getByLabelText('妻の当月手取り収入');
+        const husbandInput = screen.getByLabelText('夫');
+        const wifeInput = screen.getByLabelText('妻');
 
         fireEvent.change(husbandInput, {target: {value: '230000'}});
         fireEvent.change(wifeInput, {target: {value: '230000'}});
