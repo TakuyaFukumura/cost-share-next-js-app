@@ -2,7 +2,7 @@
 category,item,amount,is_active
 fixed_cost,家賃,130000,true
 fixed_cost,光熱費,20000,true
-fixed_cost,通信費（Wi-Fi）,5000,true
+fixed_cost,Wi-Fi,5000,true
 fixed_cost,水道代,4000,true
 fixed_cost,食費,60000,true
 fixed_cost,日用品,10000,true
