@@ -71,7 +71,7 @@ describe('Calculator', () => {
         expect(screen.getByText(hasTextContent('拠出額: 107,733円'))).toBeInTheDocument();
         expect(screen.getByText(hasTextContent('拠出額: 92,267円'))).toBeInTheDocument();
 
-        fireEvent.change(screen.getByLabelText('食費の男性負担割合'), {target: {value: '60'}});
+        fireEvent.change(screen.getByLabelText('食費の夫負担割合'), {target: {value: '60'}});
 
         expect(screen.getByDisplayValue('60')).toBeInTheDocument();
         expect(screen.getByDisplayValue('40')).toBeInTheDocument();

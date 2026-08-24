@@ -134,7 +134,7 @@ export default function Calculator({
                     </p>
                     <div className="grid md:grid-cols-2 gap-4">
                         <label className="flex flex-col gap-2">
-                            <span className="text-sm text-gray-600 dark:text-gray-300">男性（夫）</span>
+                            <span className="text-sm text-gray-600 dark:text-gray-300">夫</span>
                             <div className="flex items-center gap-2">
                                 <input
                                     type="number"
@@ -145,7 +145,7 @@ export default function Calculator({
                                         Math.min(100, Math.max(0, Number(event.target.value) || 0)),
                                     )}
                                     className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-900"
-                                    aria-label="食費の男性負担割合"
+                                    aria-label="食費の夫負担割合"
                                 />
                                 <span>%</span>
                             </div>
@@ -154,7 +154,7 @@ export default function Calculator({
                             </span>
                         </label>
                         <label className="flex flex-col gap-2">
-                            <span className="text-sm text-gray-600 dark:text-gray-300">女性（妻）</span>
+                            <span className="text-sm text-gray-600 dark:text-gray-300">妻</span>
                             <div className="flex items-center gap-2">
                                 <input
                                     type="number"
@@ -166,7 +166,7 @@ export default function Calculator({
                                         setHusbandFoodRatio(100 - ratio);
                                     }}
                                     className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-900"
-                                    aria-label="食費の女性負担割合"
+                                    aria-label="食費の妻負担割合"
                                 />
                                 <span>%</span>
                             </div>
