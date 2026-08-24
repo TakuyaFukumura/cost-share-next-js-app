@@ -22,6 +22,11 @@ npm install
 npm run dev
 ```
 
+## Vercelデプロイ
+
+VercelのGit連携による自動デプロイは `main` ブランチのみ有効です。
+その他のブランチへのpushでは自動デプロイされません。
+
 ## 検証コマンド
 
 ```bash
