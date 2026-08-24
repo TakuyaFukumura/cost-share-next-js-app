@@ -128,7 +128,7 @@ export default function Calculator({
                 </section>
 
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
-                    <h2 className="text-xl font-semibold mb-4">食費の負担割合</h2>
+                    <h2 className="text-xl font-semibold mb-4">食費負担割合</h2>
                     <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
                         食事量の差を考慮して、食費だけ個別に負担割合を設定できます。
                     </p>
