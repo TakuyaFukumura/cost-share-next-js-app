@@ -64,7 +64,7 @@ describe('Header', () => {
             renderWithProvider('light');
 
             const button = screen.getByRole('button');
-            expect(button).toHaveAttribute('title', '現在: ライトモード');
+            expect(button).toHaveAttribute('title', '現在：ライトモード');
         });
     });
 
@@ -87,7 +87,7 @@ describe('Header', () => {
             renderWithProvider('dark');
 
             const button = screen.getByRole('button');
-            expect(button).toHaveAttribute('title', '現在: ダークモード');
+            expect(button).toHaveAttribute('title', '現在：ダークモード');
         });
     });
 
@@ -163,7 +163,7 @@ describe('Header', () => {
 
             // title属性による説明があることを確認
             expect(button).toHaveAttribute('title');
-            expect(button.getAttribute('title')).toContain('現在:');
+            expect(button.getAttribute('title')).toContain('現在：');
         });
     });
 
