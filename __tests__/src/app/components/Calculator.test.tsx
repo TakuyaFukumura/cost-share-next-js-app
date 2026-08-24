@@ -25,7 +25,7 @@ describe('Calculator', () => {
         expect(screen.getByText(hasTextContent('支出：83,721円'))).toBeInTheDocument();
         expect(screen.getByText(hasTextContent('収入 - 支出：133,721円'))).toBeInTheDocument();
         expect(screen.getByText(hasTextContent('収入 - 支出：116,279円'))).toBeInTheDocument();
-        expect(screen.getByText('合計差額')).toBeInTheDocument();
+        expect(screen.getAllByText('合計')).toHaveLength(3);
         expect(screen.getByText(hasTextContent('250,000円'))).toBeInTheDocument();
     });
 

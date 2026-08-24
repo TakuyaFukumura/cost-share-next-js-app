@@ -206,7 +206,7 @@ export default function Calculator({
                         </div>
                     </div>
                     <div className="border-t mt-4 pt-4 font-semibold flex justify-between">
-                        <span>合計差額</span>
+                        <span>合計</span>
                         <span className={getAmountColorClass(summary.totalRemaining)}>{formatCurrency(summary.totalRemaining)}</span>
                     </div>
                 </section>
