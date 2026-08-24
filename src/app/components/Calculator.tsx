@@ -101,7 +101,7 @@ export default function Calculator({
                 </section>
 
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
-                    <h2 className="text-xl font-semibold mb-4">共通予算サマリ</h2>
+                    <h2 className="text-xl font-semibold mb-4">共通予算</h2>
                     <ul className="space-y-2 mb-4">
                         {editableBudgetItems.map((item, index) => (
                             <li key={`${item.category}-${item.item}`} className="flex items-center justify-between gap-4">
