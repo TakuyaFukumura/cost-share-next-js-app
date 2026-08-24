@@ -71,10 +71,10 @@ export default function Calculator({
         <div className="max-w-3xl mx-auto p-4 md:p-8">
             <div className="space-y-6">
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
-                    <h2 className="text-xl font-semibold mb-4">収入入力フォーム</h2>
+                    <h2 className="text-xl font-semibold mb-4">手取り月収</h2>
                     <div className="grid md:grid-cols-2 gap-4">
                         <label className="flex flex-col gap-2">
-                            <span className="text-sm text-gray-600 dark:text-gray-300">夫の当月手取り収入</span>
+                            <span className="text-sm text-gray-600 dark:text-gray-300">夫</span>
                             <input
                                 type="number"
                                 min={0}
@@ -84,7 +84,7 @@ export default function Calculator({
                             />
                         </label>
                         <label className="flex flex-col gap-2">
-                            <span className="text-sm text-gray-600 dark:text-gray-300">妻の当月手取り収入</span>
+                            <span className="text-sm text-gray-600 dark:text-gray-300">妻</span>
                             <input
                                 type="number"
                                 min={0}
@@ -95,13 +95,13 @@ export default function Calculator({
                         </label>
                     </div>
                     <div className="border-t mt-4 pt-4 font-semibold flex justify-between">
-                        <span>合計収入</span>
+                        <span>合計</span>
                         <span className="text-lg text-blue-600 dark:text-blue-400">{formatCurrency(husbandIncome + wifeIncome)}</span>
                     </div>
                 </section>
 
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
-                    <h2 className="text-xl font-semibold mb-4">共通予算サマリ</h2>
+                    <h2 className="text-xl font-semibold mb-4">共通予算</h2>
                     <ul className="space-y-2 mb-4">
                         {editableBudgetItems.map((item, index) => (
                             <li key={`${item.category}-${item.item}`} className="flex items-center justify-between gap-4">
@@ -128,13 +128,13 @@ export default function Calculator({
                 </section>
 
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
-                    <h2 className="text-xl font-semibold mb-4">食費の負担割合</h2>
+                    <h2 className="text-xl font-semibold mb-4">食費負担割合</h2>
                     <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                        食事量の差を考慮して、食費だけ個別に負担割合を設定できます。
+                        必要カロリーの差を考慮して、食費だけ個別に負担割合を設定できます。
                     </p>
                     <div className="grid md:grid-cols-2 gap-4">
                         <label className="flex flex-col gap-2">
-                            <span className="text-sm text-gray-600 dark:text-gray-300">男性（夫）</span>
+                            <span className="text-sm text-gray-600 dark:text-gray-300">夫</span>
                             <div className="flex items-center gap-2">
                                 <input
                                     type="number"
@@ -145,16 +145,16 @@ export default function Calculator({
                                         Math.min(100, Math.max(0, Number(event.target.value) || 0)),
                                     )}
                                     className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-900"
-                                    aria-label="食費の男性負担割合"
+                                    aria-label="食費の夫負担割合"
                                 />
                                 <span>%</span>
                             </div>
                             <span className="text-sm text-gray-600 dark:text-gray-300">
-                                負担額: {formatCurrency(husbandFoodContribution)}
+                                負担額：{formatCurrency(husbandFoodContribution)}
                             </span>
                         </label>
                         <label className="flex flex-col gap-2">
-                            <span className="text-sm text-gray-600 dark:text-gray-300">女性（妻）</span>
+                            <span className="text-sm text-gray-600 dark:text-gray-300">妻</span>
                             <div className="flex items-center gap-2">
                                 <input
                                     type="number"
@@ -166,12 +166,12 @@ export default function Calculator({
                                         setHusbandFoodRatio(100 - ratio);
                                     }}
                                     className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-900"
-                                    aria-label="食費の女性負担割合"
+                                    aria-label="食費の妻負担割合"
                                 />
                                 <span>%</span>
                             </div>
                             <span className="text-sm text-gray-600 dark:text-gray-300">
-                                負担額: {formatCurrency(wifeFoodContribution)}
+                                負担額：{formatCurrency(wifeFoodContribution)}
                             </span>
                         </label>
                     </div>
@@ -182,31 +182,31 @@ export default function Calculator({
                     <div className="grid md:grid-cols-2 gap-4">
                         <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
                             <h3 className="font-medium mb-2">夫</h3>
-                            <p>負担割合: {(summary.husbandRatio * 100).toFixed(1)}%</p>
-                            <p>拠出額: <span className={getAmountColorClass(summary.husbandContribution)}>{formatCurrency(summary.husbandContribution)}</span></p>
+                            <p>負担割合：{(summary.husbandRatio * 100).toFixed(1)}%</p>
+                            <p>支出：<span className={getAmountColorClass(summary.husbandContribution)}>{formatCurrency(summary.husbandContribution)}</span></p>
                         </div>
                         <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
                             <h3 className="font-medium mb-2">妻</h3>
-                            <p>負担割合: {(summary.wifeRatio * 100).toFixed(1)}%</p>
-                            <p>拠出額: <span className={getAmountColorClass(summary.wifeContribution)}>{formatCurrency(summary.wifeContribution)}</span></p>
+                            <p>負担割合：{(summary.wifeRatio * 100).toFixed(1)}%</p>
+                            <p>支出：<span className={getAmountColorClass(summary.wifeContribution)}>{formatCurrency(summary.wifeContribution)}</span></p>
                         </div>
                     </div>
                 </section>
 
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
-                    <h2 className="text-xl font-semibold mb-4">差額サマリ</h2>
+                    <h2 className="text-xl font-semibold mb-4">収支</h2>
                     <div className="grid md:grid-cols-2 gap-4">
                         <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
                             <h3 className="font-medium mb-2">夫</h3>
-                            <p>収入 - 拠出額: <span className={getAmountColorClass(summary.husbandRemaining)}>{formatCurrency(summary.husbandRemaining)}</span></p>
+                            <p>収入 - 支出：<span className={getAmountColorClass(summary.husbandRemaining)}>{formatCurrency(summary.husbandRemaining)}</span></p>
                         </div>
                         <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
                             <h3 className="font-medium mb-2">妻</h3>
-                            <p>収入 - 拠出額: <span className={getAmountColorClass(summary.wifeRemaining)}>{formatCurrency(summary.wifeRemaining)}</span></p>
+                            <p>収入 - 支出：<span className={getAmountColorClass(summary.wifeRemaining)}>{formatCurrency(summary.wifeRemaining)}</span></p>
                         </div>
                     </div>
                     <div className="border-t mt-4 pt-4 font-semibold flex justify-between">
-                        <span>合計差額</span>
+                        <span>合計</span>
                         <span className={getAmountColorClass(summary.totalRemaining)}>{formatCurrency(summary.totalRemaining)}</span>
                     </div>
                 </section>
