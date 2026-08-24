@@ -14,17 +14,17 @@ describe('Calculator', () => {
         wifeIncomeDefault: 200000,
     };
 
-    it('初期値から負担割合と拠出額を表示する', () => {
+    it('初期値から負担割合と支出を表示する', () => {
         render(<Calculator {...props} />);
 
         expect(screen.getByDisplayValue('230000')).toBeInTheDocument();
         expect(screen.getByLabelText('家賃の予算')).toHaveValue(150000);
         expect(screen.getByText('負担割合: 53.5%')).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('拠出額: 96,279円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('支出: 96,279円'))).toBeInTheDocument();
         expect(screen.getByText('負担割合: 46.5%')).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('拠出額: 83,721円'))).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('収入 - 拠出額: 133,721円'))).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('収入 - 拠出額: 116,279円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('支出: 83,721円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('収入 - 支出: 133,721円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('収入 - 支出: 116,279円'))).toBeInTheDocument();
         expect(screen.getByText('合計差額')).toBeInTheDocument();
         expect(screen.getByText(hasTextContent('250,000円'))).toBeInTheDocument();
     });
@@ -39,7 +39,7 @@ describe('Calculator', () => {
         fireEvent.change(wifeInput, {target: {value: '230000'}});
 
         expect(screen.getAllByText('負担割合: 50.0%')).toHaveLength(2);
-        expect(screen.getAllByText(hasTextContent('拠出額: 90,000円'))).toHaveLength(2);
+        expect(screen.getAllByText(hasTextContent('支出: 90,000円'))).toHaveLength(2);
     });
 
     it('共通予算の金額変更を合計と計算結果へ反映する', () => {
@@ -68,8 +68,8 @@ describe('Calculator', () => {
         expect(screen.getByDisplayValue('45')).toBeInTheDocument();
         expect(screen.getByText('負担額: 27,500円')).toBeInTheDocument();
         expect(screen.getByText('負担額: 22,500円')).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('拠出額: 107,733円'))).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('拠出額: 92,267円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('支出: 107,733円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('支出: 92,267円'))).toBeInTheDocument();
 
         fireEvent.change(screen.getByLabelText('食費の夫負担割合'), {target: {value: '60'}});
 
@@ -77,11 +77,11 @@ describe('Calculator', () => {
         expect(screen.getByDisplayValue('40')).toBeInTheDocument();
         expect(screen.getByText('負担額: 30,000円')).toBeInTheDocument();
         expect(screen.getByText('負担額: 20,000円')).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('拠出額: 110,233円'))).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('拠出額: 89,767円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('支出: 110,233円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('支出: 89,767円'))).toBeInTheDocument();
     });
 
-    it('端数丸めが発生しても拠出額合計が予算合計と一致する', () => {
+    it('端数丸めが発生しても支出合計が予算合計と一致する', () => {
         render(
             <Calculator
                 budgetItems={[{category: 'other', item: 'テスト', amount: 1, isActive: true}]}
@@ -90,7 +90,7 @@ describe('Calculator', () => {
             />,
         );
 
-        expect(screen.getByText(hasTextContent('拠出額: 1円'))).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('拠出額: 0円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('支出: 1円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('支出: 0円'))).toBeInTheDocument();
     });
 });
