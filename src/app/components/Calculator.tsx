@@ -194,7 +194,7 @@ export default function Calculator({
                 </section>
 
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
-                    <h2 className="text-xl font-semibold mb-4">差額サマリ</h2>
+                    <h2 className="text-xl font-semibold mb-4">収支</h2>
                     <div className="grid md:grid-cols-2 gap-4">
                         <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
                             <h3 className="font-medium mb-2">夫</h3>
