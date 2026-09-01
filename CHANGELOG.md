@@ -5,7 +5,7 @@
 フォーマットは [Keep a Changelog](https://keepachangelog.com/ja/1.0.0/) に基づいており、
 このプロジェクトは [Semantic Versioning](https://semver.org/lang/ja/) に従っています。
 
-## [Unreleased]
+## [0.6.1] - 2026-09-01
 
 ### 修正
 
@@ -19,6 +19,8 @@
 - 「差額サマリ」の表示を「収支」に変更
 - 「合計差額」の表示を「合計」に変更
 - テーマ切り替えボタンのモード名ラベルを削除し、アイコンのみの表示に変更
+
+## [Unreleased]
 
 ## [0.6.0] - 2026-08-23
 
