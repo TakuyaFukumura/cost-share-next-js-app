@@ -6,7 +6,7 @@ import {useDarkMode} from './DarkModeProvider';
 export default function Header() {
     const {theme, setTheme} = useDarkMode();
     // クライアントにマウントされたことを検知するステート。
-    // マウント前はサーバー側と同じデフォルト値（ライトモード）を表示し、
+    // マウント前はサーバー側と同じデフォルトテーマを表示し、
     // Hydration Error を防ぐ。
     const [mounted, setMounted] = useState(false);
 
@@ -23,7 +23,7 @@ export default function Header() {
         }
     };
 
-    // マウント前はサーバー側と一致させるためデフォルト（ライトモード）を使用する
+    // マウント前はサーバー側と一致させるためデフォルトテーマを使用する
     const currentTheme = mounted ? theme : 'light';
 
     const getThemeIcon = () => {
@@ -31,14 +31,6 @@ export default function Header() {
             return '☀️';
         } else {
             return '🌙';
-        }
-    };
-
-    const getThemeLabel = () => {
-        if (currentTheme === 'light') {
-            return 'ライトモード';
-        } else {
-            return 'ダークモード';
         }
     };
 
@@ -60,10 +52,10 @@ export default function Header() {
                             className="flex items-center gap-2 px-3 py-2 text-sm font-medium
                             text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700
                             rounded-lg transition-colors duration-200"
-                            title={`現在：${getThemeLabel()}`}
+                            title="テーマを切り替え"
+                            aria-label="テーマを切り替え"
                         >
                             <span className="text-lg">{getThemeIcon()}</span>
-                            <span className="hidden sm:inline">{getThemeLabel()}</span>
                         </button>
                     </div>
                 </div>
