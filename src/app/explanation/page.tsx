@@ -30,7 +30,7 @@ export default function ExplanationPage() {
                 <section className="mb-8 rounded-xl border border-blue-200 bg-blue-50 p-5 dark:border-blue-900 dark:bg-blue-950/40">
                     <h2 className="mb-3 text-xl font-bold text-gray-900 dark:text-gray-100">具体例</h2>
                     <p className="mb-4 leading-7 text-gray-700 dark:text-gray-300">
-                        家賃が10万円で、夫だけが3万円の家賃補助を受ける場合を考えます。
+                        家賃が10万円で、妻だけが3万円の家賃補助を受ける場合を考えます。
                     </p>
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[28rem] text-left text-sm text-gray-700 dark:text-gray-300">
@@ -46,7 +46,7 @@ export default function ExplanationPage() {
                                     <td className="px-3 py-2 text-right">100,000円</td>
                                 </tr>
                                 <tr className="border-b border-blue-100 dark:border-blue-900">
-                                    <td className="px-3 py-2">夫の家賃補助</td>
+                                    <td className="px-3 py-2">妻の家賃補助</td>
                                     <td className="px-3 py-2 text-right">30,000円</td>
                                 </tr>
                                 <tr>
@@ -57,8 +57,8 @@ export default function ExplanationPage() {
                         </table>
                     </div>
                     <p className="mt-4 leading-7 text-gray-700 dark:text-gray-300">
-                        残額を折半すると、2人とも35,000円を支払います。しかし、夫だけが補助を受け、
-                        補助に伴う税金や社会保険料も夫だけが負担するなら、2人の実質的な負担は同じとは限りません。
+                        残額を折半すると、2人とも35,000円を支払います。しかし、妻だけが補助を受け、
+                        補助に伴う税金や社会保険料も妻だけが負担するなら、2人の実質的な負担は同じとは限りません。
                     </p>
                 </section>
 
