@@ -1,6 +1,7 @@
 'use client';
 
 import {useEffect, useState} from 'react';
+import Link from 'next/link';
 import {useDarkMode} from './DarkModeProvider';
 
 export default function Header() {
@@ -41,12 +42,23 @@ export default function Header() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     <div className="flex items-center">
-                        <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                        <Link
+                            href="/"
+                            className="text-xl font-semibold text-gray-800 dark:text-gray-200"
+                        >
                             cost-share
-                        </h1>
+                        </Link>
                     </div>
 
                     <div className="flex items-center">
+                        <Link
+                            href="/explanation"
+                            className="mr-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-700
+                            transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300
+                            dark:hover:bg-gray-700"
+                        >
+                            解説
+                        </Link>
                         <button
                             onClick={handleThemeToggle}
                             className="flex items-center gap-2 px-3 py-2 text-sm font-medium
