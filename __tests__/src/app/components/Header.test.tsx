@@ -45,6 +45,12 @@ describe('Header', () => {
             const button = screen.getByRole('button');
             expect(button).toBeInTheDocument();
         });
+
+        it('解説ページへのリンクが表示される', () => {
+            renderWithProvider();
+
+            expect(screen.getByRole('link', {name: '解説'})).toHaveAttribute('href', '/explanation');
+        });
     });
 
     describe('ライトモード', () => {
