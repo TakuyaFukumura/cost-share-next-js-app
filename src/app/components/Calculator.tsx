@@ -21,6 +21,7 @@ export default function Calculator({
     const [husbandIncome, setHusbandIncome] = useState<number>(husbandIncomeDefault);
     const [wifeIncome, setWifeIncome] = useState<number>(wifeIncomeDefault);
     const [editableBudgetItems, setEditableBudgetItems] = useState<BudgetCsvRow[]>(budgetItems);
+    const [isFoodRatioEnabled, setIsFoodRatioEnabled] = useState(false);
     const [husbandFoodRatio, setHusbandFoodRatio] = useState(55);
     const wifeFoodRatio = 100 - husbandFoodRatio;
     const totalBudget = editableBudgetItems.reduce((sum, item) => sum + item.amount, 0);
@@ -53,7 +54,9 @@ export default function Calculator({
         const wifeRatio = wifeIncome / totalIncome;
         const otherBudget = totalBudget - foodBudget;
         const husbandContribution = Math.round(
-            otherBudget * husbandRatio + foodBudget * (husbandFoodRatio / 100),
+            isFoodRatioEnabled
+                ? otherBudget * husbandRatio + foodBudget * (husbandFoodRatio / 100)
+                : totalBudget * husbandRatio,
         );
 
         return {
@@ -65,7 +68,7 @@ export default function Calculator({
             wifeRemaining: wifeIncome - (totalBudget - husbandContribution),
             totalRemaining: totalIncome - totalBudget,
         };
-    }, [foodBudget, husbandFoodRatio, husbandIncome, totalBudget, wifeIncome]);
+    }, [foodBudget, husbandFoodRatio, husbandIncome, isFoodRatioEnabled, totalBudget, wifeIncome]);
 
     return (
         <div className="max-w-3xl mx-auto p-4 md:p-8">
@@ -132,49 +135,60 @@ export default function Calculator({
                     <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
                         必要カロリーの差を考慮して、食費だけ個別に負担割合を設定できます。
                     </p>
-                    <div className="grid md:grid-cols-2 gap-4">
-                        <label className="flex flex-col gap-2">
-                            <span className="text-sm text-gray-600 dark:text-gray-300">夫</span>
-                            <div className="flex items-center gap-2">
-                                <input
-                                    type="number"
-                                    min={0}
-                                    max={100}
-                                    value={husbandFoodRatio}
-                                    onChange={(event) => setHusbandFoodRatio(
-                                        Math.min(100, Math.max(0, Number(event.target.value) || 0)),
-                                    )}
-                                    className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-900"
-                                    aria-label="食費の夫負担割合"
-                                />
-                                <span>%</span>
-                            </div>
-                            <span className="text-sm text-gray-600 dark:text-gray-300">
-                                負担額：{formatCurrency(husbandFoodContribution)}
-                            </span>
-                        </label>
-                        <label className="flex flex-col gap-2">
-                            <span className="text-sm text-gray-600 dark:text-gray-300">妻</span>
-                            <div className="flex items-center gap-2">
-                                <input
-                                    type="number"
-                                    min={0}
-                                    max={100}
-                                    value={wifeFoodRatio}
-                                    onChange={(event) => {
-                                        const ratio = Math.min(100, Math.max(0, Number(event.target.value) || 0));
-                                        setHusbandFoodRatio(100 - ratio);
-                                    }}
-                                    className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-900"
-                                    aria-label="食費の妻負担割合"
-                                />
-                                <span>%</span>
-                            </div>
-                            <span className="text-sm text-gray-600 dark:text-gray-300">
-                                負担額：{formatCurrency(wifeFoodContribution)}
-                            </span>
-                        </label>
-                    </div>
+                    <label className="mb-4 flex items-center gap-2">
+                        <input
+                            type="checkbox"
+                            checked={isFoodRatioEnabled}
+                            onChange={(event) => setIsFoodRatioEnabled(event.target.checked)}
+                            aria-label="食費負担割合を個別に設定"
+                        />
+                        <span>食費負担割合を個別に設定する</span>
+                    </label>
+                    {isFoodRatioEnabled && (
+                        <div className="grid md:grid-cols-2 gap-4">
+                            <label className="flex flex-col gap-2">
+                                <span className="text-sm text-gray-600 dark:text-gray-300">夫</span>
+                                <div className="flex items-center gap-2">
+                                    <input
+                                        type="number"
+                                        min={0}
+                                        max={100}
+                                        value={husbandFoodRatio}
+                                        onChange={(event) => setHusbandFoodRatio(
+                                            Math.min(100, Math.max(0, Number(event.target.value) || 0)),
+                                        )}
+                                        className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-900"
+                                        aria-label="食費の夫負担割合"
+                                    />
+                                    <span>%</span>
+                                </div>
+                                <span className="text-sm text-gray-600 dark:text-gray-300">
+                                    負担額：{formatCurrency(husbandFoodContribution)}
+                                </span>
+                            </label>
+                            <label className="flex flex-col gap-2">
+                                <span className="text-sm text-gray-600 dark:text-gray-300">妻</span>
+                                <div className="flex items-center gap-2">
+                                    <input
+                                        type="number"
+                                        min={0}
+                                        max={100}
+                                        value={wifeFoodRatio}
+                                        onChange={(event) => {
+                                            const ratio = Math.min(100, Math.max(0, Number(event.target.value) || 0));
+                                            setHusbandFoodRatio(100 - ratio);
+                                        }}
+                                        className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-900"
+                                        aria-label="食費の妻負担割合"
+                                    />
+                                    <span>%</span>
+                                </div>
+                                <span className="text-sm text-gray-600 dark:text-gray-300">
+                                    負担額：{formatCurrency(wifeFoodContribution)}
+                                </span>
+                            </label>
+                        </div>
+                    )}
                 </section>
 
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">

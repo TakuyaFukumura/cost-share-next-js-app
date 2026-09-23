@@ -22,6 +22,7 @@ describe('解説ページ', () => {
         expect(screen.getByRole('heading', {name: '計算のしくみ'})).toBeInTheDocument();
         expect(screen.getByText('食費の経路')).toBeInTheDocument();
         expect(screen.getByText('食費以外の経路')).toBeInTheDocument();
+        expect(screen.getByText(/食費の個別設定が無効の場合/)).toBeInTheDocument();
         expect(screen.getByText(/合計収入が0円の場合/)).toBeInTheDocument();
         expect(screen.getByRole('link', {name: '解説一覧に戻る'}))
             .toHaveAttribute('href', '/explanation');
