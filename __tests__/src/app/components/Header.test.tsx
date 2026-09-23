@@ -46,7 +46,7 @@ describe('Header', () => {
             expect(button).toBeInTheDocument();
         });
 
-        it('解説ページへのリンクが表示される', () => {
+        it('解説一覧へのリンクが表示される', () => {
             renderWithProvider();
 
             expect(screen.getByRole('link', {name: '解説'})).toHaveAttribute('href', '/explanation');
