@@ -10,7 +10,7 @@ const articles = [
     {
         href: '/explanation/calculation',
         title: '計算のしくみ',
-        description: '収入・共通予算・食費負担割合から、支出と残額が決まる流れを図解します。',
+        description: '収入・共通予算・任意の食費負担割合から、支出と残額が決まる流れを図解します。',
     },
     {
         href: '/explanation/rent-subsidy',
