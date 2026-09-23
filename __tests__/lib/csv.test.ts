@@ -1,4 +1,4 @@
-import {parseBudgetCsv} from '../../lib/csv';
+import {loadBudgetData, parseBudgetCsv} from '../../lib/csv';
 
 describe('parseBudgetCsv', () => {
     it('コメント行と空行を無視してCSVをパースする', () => {
@@ -6,7 +6,7 @@ describe('parseBudgetCsv', () => {
 # comment
 category,item,amount,is_active
 
-fixed_cost,家賃,130000,true
+fixed_cost,家賃,90000,true
 income_sample,夫基本手取り,230000,false
 `;
 
@@ -16,9 +16,18 @@ income_sample,夫基本手取り,230000,false
         expect(rows[0]).toEqual({
             category: 'fixed_cost',
             item: '家賃',
-            amount: 130000,
+            amount: 90000,
             isActive: true,
         });
+    });
+
+    it('共通予算と初期収入を設定値どおりに読み込む', async () => {
+        const budgetData = await loadBudgetData();
+
+        expect(budgetData.activeBudgetRows.find((row) => row.item === '家賃')?.amount).toBe(90000);
+        expect(budgetData.totalBudget).toBe(299000);
+        expect(budgetData.husbandIncomeDefault).toBe(240000);
+        expect(budgetData.wifeIncomeDefault).toBe(210000);
     });
 
     it('amount失敗時は0、is_activeはtrueのみtrueとして扱う', () => {
