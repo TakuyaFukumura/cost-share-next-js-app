@@ -41,7 +41,7 @@ export default function Header() {
             border-gray-200 dark:border-gray-700 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 sm:gap-4">
                         <Link
                             href="/"
                             className="text-xl font-semibold text-gray-800 dark:text-gray-200"
@@ -50,11 +50,19 @@ export default function Header() {
                         </Link>
                         <Link
                             href="/explanation"
-                            className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700
+                            className="rounded-lg px-2 py-2 text-sm font-medium text-gray-700 sm:px-3
                             transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300
                             dark:hover:bg-gray-700"
                         >
                             解説
+                        </Link>
+                        <Link
+                            href="/bonus"
+                            className="rounded-lg px-2 py-2 text-sm font-medium text-gray-700 sm:px-3
+                            transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300
+                            dark:hover:bg-gray-700"
+                        >
+                            ボーナス計算
                         </Link>
                     </div>
 

@@ -51,6 +51,12 @@ describe('Header', () => {
 
             expect(screen.getByRole('link', {name: '解説'})).toHaveAttribute('href', '/explanation');
         });
+
+        it('ボーナス計算ページへのリンクが表示される', () => {
+            renderWithProvider();
+
+            expect(screen.getByRole('link', {name: 'ボーナス計算'})).toHaveAttribute('href', '/bonus');
+        });
     });
 
     describe('ライトモード', () => {
