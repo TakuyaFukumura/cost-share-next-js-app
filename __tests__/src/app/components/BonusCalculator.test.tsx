@@ -7,29 +7,29 @@ describe('BonusCalculator', () => {
     it('初期値と按分後の拠出額・残額を表示する', () => {
         render(<BonusCalculator/>);
 
-        expect(screen.getByLabelText('夫のボーナス手取り額')).toHaveValue(500000);
-        expect(screen.getByLabelText('妻のボーナス手取り額')).toHaveValue(400000);
-        expect(screen.getByLabelText('貯金目標額')).toHaveValue(300000);
-        expect(screen.getByText('負担割合：55.6%')).toBeInTheDocument();
-        expect(screen.getByText('負担割合：44.4%')).toBeInTheDocument();
-        expect(screen.getByText('拠出額：166,667円')).toBeInTheDocument();
-        expect(screen.getByText('拠出額：133,333円')).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('残額：333,333円'))).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('残額：266,667円'))).toBeInTheDocument();
-        expect(screen.getByText('600,000円')).toBeInTheDocument();
+        expect(screen.getByLabelText('夫のボーナス手取り額')).toHaveValue(100000);
+        expect(screen.getByLabelText('妻のボーナス手取り額')).toHaveValue(500000);
+        expect(screen.getByLabelText('貯金目標額（万円）')).toHaveValue(30);
+        expect(screen.getByText('負担割合：16.7%')).toBeInTheDocument();
+        expect(screen.getByText('負担割合：83.3%')).toBeInTheDocument();
+        expect(screen.getByText('拠出額：50,000円')).toBeInTheDocument();
+        expect(screen.getByText('拠出額：250,000円')).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('残額：50,000円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('残額：250,000円'))).toBeInTheDocument();
+        expect(screen.getAllByText('300,000円')).toHaveLength(2);
     });
 
     it('入力変更を計算結果に即時反映し、目標未達を表示する', () => {
         render(<BonusCalculator/>);
 
-        fireEvent.change(screen.getByLabelText('貯金目標額'), {target: {value: '1000000'}});
+        fireEvent.change(screen.getByLabelText('貯金目標額（万円）'), {target: {value: '100'}});
 
         expect(screen.getByText('今回の拠出額合計')).toBeInTheDocument();
-        expect(screen.getAllByText('900,000円')).toHaveLength(2);
+        expect(screen.getAllByText('600,000円')).toHaveLength(2);
         const unmetAmount = screen.getByRole('status');
         expect(unmetAmount.tagName).toBe('OUTPUT');
         expect(unmetAmount).toHaveClass('block');
-        expect(unmetAmount).toHaveTextContent('貯金目標までの未達額：100,000円');
+        expect(unmetAmount).toHaveTextContent('貯金目標までの未達額：400,000円');
         expect(screen.getAllByText(hasTextContent('残額：0円'))).toHaveLength(2);
     });
 
