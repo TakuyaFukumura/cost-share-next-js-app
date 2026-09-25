@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {calculateBonusSavings} from '@/lib/bonus';
 
 const formatCurrency = (amount: number) => `${amount.toLocaleString('ja-JP')}円`;
+const YEN_PER_MAN_YEN = 10_000;
 const getAmountColorClass = (amount: number) =>
     amount < 0 ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-gray-100';
 
@@ -13,9 +14,10 @@ const parseAmountInput = (value: string) => {
 };
 
 export default function BonusCalculator() {
-    const [husbandBonus, setHusbandBonus] = useState(500000);
-    const [wifeBonus, setWifeBonus] = useState(400000);
-    const [savingsGoal, setSavingsGoal] = useState(300000);
+    const [husbandBonus, setHusbandBonus] = useState(100000);
+    const [wifeBonus, setWifeBonus] = useState(500000);
+    const [savingsGoalManYen, setSavingsGoalManYen] = useState(10);
+    const savingsGoal = savingsGoalManYen * YEN_PER_MAN_YEN;
     const summary = calculateBonusSavings(husbandBonus, wifeBonus, savingsGoal);
 
     return (
@@ -74,13 +76,13 @@ export default function BonusCalculator() {
                                 type="number"
                                 min={0}
                                 step={1}
-                                value={savingsGoal}
-                                onChange={(event) => setSavingsGoal(parseAmountInput(event.target.value))}
-                                aria-label="貯金目標額"
+                                value={savingsGoalManYen}
+                                onChange={(event) => setSavingsGoalManYen(parseAmountInput(event.target.value))}
+                                aria-label="貯金目標額（万円）"
                                 className="w-full rounded border border-gray-300 bg-white px-3 py-2
                                     dark:border-gray-600 dark:bg-gray-900"
                             />
-                            <span>円</span>
+                            <span>万円</span>
                         </span>
                     </label>
                     <div className="mt-4 flex justify-between border-t pt-4 font-semibold">
