@@ -53,12 +53,8 @@ describe('Database Functions', () => {
     // 各テスト後のクリーンアップ
     afterEach(async () => {
         // データベース接続をクローズ
-        try {
-            const {getDatabase} = await import('../../lib/database');
-            const db = getDatabase();
-            if (db && db.close) db.close();
-        } catch {
-        }
+        const {getDatabase} = await import('../../lib/database');
+        getDatabase().close();
 
         cleanupTestDir();
     });
