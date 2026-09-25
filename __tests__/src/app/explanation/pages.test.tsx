@@ -16,13 +16,12 @@ describe('解説ページ', () => {
         expect(screen.getByRole('link', {name: '家計負担割合の計算に戻る'})).toHaveAttribute('href', '/');
     });
 
-    it('計算ロジック記事で食費と食費以外の経路および例外注記を説明する', () => {
+    it('計算ロジック記事で収入割合による分担と例外注記を説明する', () => {
         render(<CalculationExplanationPage/>);
 
         expect(screen.getByRole('heading', {name: '計算のしくみ'})).toBeInTheDocument();
-        expect(screen.getByText('食費の経路')).toBeInTheDocument();
-        expect(screen.getByText('食費以外の経路')).toBeInTheDocument();
-        expect(screen.getByText(/食費の個別設定が無効の場合/)).toBeInTheDocument();
+        expect(screen.getByText('共通予算を収入割合で分ける')).toBeInTheDocument();
+        expect(screen.getByText('夫の支出 = round(共通予算合計 × 夫の負担割合)')).toBeInTheDocument();
         expect(screen.getByText(/合計収入が0円の場合/)).toBeInTheDocument();
         expect(screen.getByRole('link', {name: '解説一覧に戻る'}))
             .toHaveAttribute('href', '/explanation');

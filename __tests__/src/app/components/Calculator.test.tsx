@@ -53,7 +53,7 @@ describe('Calculator', () => {
         expect(screen.getAllByText(hasTextContent('106,977円'))).toHaveLength(2);
     });
 
-    it('食費の個別負担割合は初期状態で無効になり、食費も収入割合で計算する', () => {
+    it('食費を含む共通予算全体を収入割合で計算する', () => {
         render(
             <Calculator
                 {...props}
@@ -64,43 +64,8 @@ describe('Calculator', () => {
             />,
         );
 
-        expect(screen.getByRole('checkbox', {name: '食費負担割合を個別に設定'})).not.toBeChecked();
-        expect(screen.queryByLabelText('食費の夫負担割合')).not.toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('支出：106,977円'))).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('支出：93,023円'))).toBeInTheDocument();
-    });
-
-    it('食費に男女別の負担割合を適用する', () => {
-        render(
-            <Calculator
-                {...props}
-                budgetItems={[
-                    {category: 'fixed_cost', item: '食費', amount: 50000, isActive: true},
-                    {category: 'fixed_cost', item: '家賃', amount: 150000, isActive: true},
-                ]}
-            />,
-        );
-
-        fireEvent.click(screen.getByRole('checkbox', {name: '食費負担割合を個別に設定'}));
-
-        expect(screen.getByDisplayValue('55')).toBeInTheDocument();
-        expect(screen.getByDisplayValue('45')).toBeInTheDocument();
-        expect(screen.getByText('負担額：27,500円')).toBeInTheDocument();
-        expect(screen.getByText('負担額：22,500円')).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('支出：107,733円'))).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('支出：92,267円'))).toBeInTheDocument();
-
-        fireEvent.change(screen.getByLabelText('食費の夫負担割合'), {target: {value: '60'}});
-
-        expect(screen.getByDisplayValue('60')).toBeInTheDocument();
-        expect(screen.getByDisplayValue('40')).toBeInTheDocument();
-        expect(screen.getByText('負担額：30,000円')).toBeInTheDocument();
-        expect(screen.getByText('負担額：20,000円')).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('支出：110,233円'))).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('支出：89,767円'))).toBeInTheDocument();
-
-        fireEvent.click(screen.getByRole('checkbox', {name: '食費負担割合を個別に設定'}));
-
+        expect(screen.queryByText('食費負担割合')).not.toBeInTheDocument();
+        expect(screen.queryByRole('checkbox', {name: '食費負担割合を個別に設定'})).not.toBeInTheDocument();
         expect(screen.getByText(hasTextContent('支出：106,977円'))).toBeInTheDocument();
         expect(screen.getByText(hasTextContent('支出：93,023円'))).toBeInTheDocument();
     });
