@@ -32,7 +32,7 @@ export default function CalculationExplanationPage() {
                 <h2 id="calculation-flow-title" className="sr-only">家計負担割合の計算フロー</h2>
                 <div className="space-y-2">
                     <FlowNode title="入力">
-                        夫・妻の手取り月収と共通予算を入力します。食費の個別負担割合は任意で有効にできます。
+                        夫・妻の手取り月収と共通予算を入力します。
                     </FlowNode>
 
                     <FlowConnector/>
@@ -44,56 +44,14 @@ export default function CalculationExplanationPage() {
 
                     <FlowConnector/>
 
-                    <section className="rounded-xl border border-gray-200 p-5 dark:border-gray-700">
-                        <h2 className="mb-4 text-lg font-bold text-gray-900 dark:text-gray-100">
-                            共通予算を2つの経路に分ける
-                        </h2>
-                        <p className="mb-4 leading-7 text-gray-700 dark:text-gray-300">
-                            食費の個別設定が無効の場合は、食費を含む全予算を収入による負担割合で分けます。
-                            有効にした場合のみ、次の食費と食費以外の経路に分かれます。
-                        </p>
-                        <div className="grid gap-4 md:grid-cols-2">
-                            <article className="rounded-lg border border-indigo-200 bg-indigo-50 p-4
-                                dark:border-indigo-900 dark:bg-indigo-950/40">
-                                <p className="mb-2 text-sm font-semibold text-indigo-800 dark:text-indigo-200">
-                                    食費の経路
-                                </p>
-                                <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">
-                                    食費負担割合を適用
-                                </h3>
-                                <p className="leading-7 text-gray-700 dark:text-gray-300">
-                                    食費は、画面で設定した夫・妻それぞれの食費負担割合で分けます。
-                                </p>
-                                <div aria-hidden="true" className="pt-3 text-center text-xl text-blue-700
-                                    dark:text-blue-300">
-                                    ↓
-                                </div>
-                            </article>
-                            <article className="rounded-lg border border-teal-200 bg-teal-50 p-4
-                                dark:border-teal-900 dark:bg-teal-950/40">
-                                <p className="mb-2 text-sm font-semibold text-teal-800 dark:text-teal-200">
-                                    食費以外の経路
-                                </p>
-                                <h3 className="mb-2 font-bold text-gray-900 dark:text-gray-100">
-                                    収入による負担割合を適用
-                                </h3>
-                                <p className="leading-7 text-gray-700 dark:text-gray-300">
-                                    共通予算合計から食費を除いた金額を、収入による負担割合で分けます。
-                                </p>
-                                <div aria-hidden="true" className="pt-3 text-center text-xl text-blue-700
-                                    dark:text-blue-300">
-                                    ↓
-                                </div>
-                            </article>
-                        </div>
-                    </section>
+                    <FlowNode title="共通予算を収入割合で分ける">
+                        共通予算全体に、それぞれの収入による負担割合を適用します。
+                    </FlowNode>
 
                     <FlowConnector/>
 
-                    <FlowNode title="2つの経路が合流し、夫の支出を計算">
-                        <p>夫の支出 = round(食費以外の予算 × 夫の負担割合</p>
-                        <p className="pl-12">+ 食費 × 夫の食費負担割合)</p>
-                        <p className="mt-2">個別設定が無効の場合：夫の支出 = round(共通予算合計 × 夫の負担割合)</p>
+                    <FlowNode title="夫の支出を計算">
+                        <p>夫の支出 = round(共通予算合計 × 夫の負担割合)</p>
                         <p className="mt-2">円単位で四捨五入します。</p>
                     </FlowNode>
 
