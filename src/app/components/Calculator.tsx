@@ -1,26 +1,21 @@
 'use client';
 
-import {useMemo, useState} from 'react';
-import type {BudgetCsvRow} from '@/lib/csv';
-
-interface CalculatorProps {
-    budgetItems: BudgetCsvRow[];
-    husbandIncomeDefault: number;
-    wifeIncomeDefault: number;
-}
+import {useMemo} from 'react';
+import {useHouseholdData} from './HouseholdDataProvider';
 
 const formatCurrency = (amount: number) => `${amount.toLocaleString('ja-JP')}円`;
 const getAmountColorClass = (amount: number) =>
     amount < 0 ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-gray-100';
 
-export default function Calculator({
-                                       budgetItems,
-                                       husbandIncomeDefault,
-                                       wifeIncomeDefault,
-                                   }: Readonly<CalculatorProps>) {
-    const [husbandIncome, setHusbandIncome] = useState<number>(husbandIncomeDefault);
-    const [wifeIncome, setWifeIncome] = useState<number>(wifeIncomeDefault);
-    const [editableBudgetItems, setEditableBudgetItems] = useState<BudgetCsvRow[]>(budgetItems);
+export default function Calculator() {
+    const {
+        husbandIncome,
+        setHusbandIncome,
+        wifeIncome,
+        setWifeIncome,
+        budgetItems: editableBudgetItems,
+        setBudgetItems: setEditableBudgetItems,
+    } = useHouseholdData();
     const totalBudget = editableBudgetItems.reduce((sum, item) => sum + item.amount, 0);
 
     const handleBudgetAmountChange = (index: number, value: string) => {
