@@ -88,16 +88,15 @@ export default function BonusCalculator() {
                         <span>{formatCurrency(summary.contributionTotal)}</span>
                     </div>
                     {summary.unmetAmount > 0 && (
-                        <p
-                            role="status"
-                            className="mt-3 rounded-lg bg-amber-50 p-3 font-medium text-amber-900
+                        <output
+                            className="mt-3 block rounded-lg bg-amber-50 p-3 font-medium text-amber-900
                                 dark:bg-amber-950 dark:text-amber-100"
                         >
                             貯金目標までの未達額：{formatCurrency(summary.unmetAmount)}
                             <span className="mt-1 block text-sm font-normal">
                                 ボーナス合計を上限として拠出します。
                             </span>
-                        </p>
+                        </output>
                     )}
                 </section>
 

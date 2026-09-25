@@ -26,7 +26,10 @@ describe('BonusCalculator', () => {
 
         expect(screen.getByText('今回の拠出額合計')).toBeInTheDocument();
         expect(screen.getAllByText('900,000円')).toHaveLength(2);
-        expect(screen.getByRole('status')).toHaveTextContent('貯金目標までの未達額：100,000円');
+        const unmetAmount = screen.getByRole('status');
+        expect(unmetAmount.tagName).toBe('OUTPUT');
+        expect(unmetAmount).toHaveClass('block');
+        expect(unmetAmount).toHaveTextContent('貯金目標までの未達額：100,000円');
         expect(screen.getAllByText(hasTextContent('残額：0円'))).toHaveLength(2);
     });
 
@@ -38,6 +41,8 @@ describe('BonusCalculator', () => {
 
         expect(screen.getAllByText('負担割合：0.0%')).toHaveLength(2);
         expect(screen.getAllByText('拠出額：0円')).toHaveLength(2);
-        expect(screen.getByRole('status')).toHaveTextContent('貯金目標までの未達額：300,000円');
+        const unmetAmount = screen.getByRole('status');
+        expect(unmetAmount.tagName).toBe('OUTPUT');
+        expect(unmetAmount).toHaveTextContent('貯金目標までの未達額：300,000円');
     });
 });
