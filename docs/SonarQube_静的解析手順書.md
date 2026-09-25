@@ -4,7 +4,7 @@
 
 Docker で SonarQube Community Build を起動し、このリポジトリの Next.js / TypeScript コードを解析する手順です。コマンド例は Windows の PowerShell を対象としています。
 
-解析範囲やカバレッジの設定はリポジトリ直下の `sonar-project.properties` で管理します。解析結果の記録は [SonarQube 静的解析](SonarQube_静的解析.md)、対応対象の選別は [SonarQube 対応項目](SonarQube_対応項目.md) を参照してください。
+解析範囲やカバレッジの設定はリポジトリ直下の `sonar-project.properties` で管理します。解析結果は、解析後に SonarQube のプロジェクト画面で確認してください。
 
 ## 前提条件
 
@@ -71,7 +71,7 @@ finally {
 - `sonar.sources` と `sonar.tests` により、アプリ本体とテストを区別して解析します。
 - `sonar.javascript.lcov.reportPaths` が Jest の `coverage/lcov.info` を読み込みます。テストを実行する前に Scanner を起動すると、カバレッジを取り込めません。
 - Windows の作業ツリーを Docker から解析する際に Git インデックスの読み取りエラーが発生したため、`sonar.scm.disabled=true` を設定しています。解析とカバレッジには影響しませんが、SonarQube 上では Git の blame 情報を利用できません。
-- `sonarqube:community` と `sonarsource/sonar-scanner-cli:latest` は更新されるタグです。前回解析したバージョンと結果は [解析レポート](SonarQube_静的解析.md) に記録しています。
+- `sonarqube:community` と `sonarsource/sonar-scanner-cli:latest` は更新されるタグです。実際に使用されたバージョンは、サーバーの `/api/server/version` と Scanner の実行ログで確認してください。
 
 ## よくある問題
 
