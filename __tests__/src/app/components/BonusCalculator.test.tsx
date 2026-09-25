@@ -9,14 +9,14 @@ describe('BonusCalculator', () => {
 
         expect(screen.getByLabelText('夫のボーナス手取り額')).toHaveValue(100000);
         expect(screen.getByLabelText('妻のボーナス手取り額')).toHaveValue(500000);
-        expect(screen.getByLabelText('貯金目標額（万円）')).toHaveValue(30);
+        expect(screen.getByLabelText('貯金目標額（万円）')).toHaveValue(10);
         expect(screen.getByText('負担割合：16.7%')).toBeInTheDocument();
         expect(screen.getByText('負担割合：83.3%')).toBeInTheDocument();
-        expect(screen.getByText('拠出額：50,000円')).toBeInTheDocument();
-        expect(screen.getByText('拠出額：250,000円')).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('残額：50,000円'))).toBeInTheDocument();
-        expect(screen.getByText(hasTextContent('残額：250,000円'))).toBeInTheDocument();
-        expect(screen.getAllByText('300,000円')).toHaveLength(2);
+        expect(screen.getByText('拠出額：16,667円')).toBeInTheDocument();
+        expect(screen.getByText('拠出額：83,333円')).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('残額：83,333円'))).toBeInTheDocument();
+        expect(screen.getByText(hasTextContent('残額：416,667円'))).toBeInTheDocument();
+        expect(screen.getByText('500,000円')).toBeInTheDocument();
     });
 
     it('入力変更を計算結果に即時反映し、目標未達を表示する', () => {
@@ -43,6 +43,6 @@ describe('BonusCalculator', () => {
         expect(screen.getAllByText('拠出額：0円')).toHaveLength(2);
         const unmetAmount = screen.getByRole('status');
         expect(unmetAmount.tagName).toBe('OUTPUT');
-        expect(unmetAmount).toHaveTextContent('貯金目標までの未達額：300,000円');
+        expect(unmetAmount).toHaveTextContent('貯金目標までの未達額：100,000円');
     });
 });

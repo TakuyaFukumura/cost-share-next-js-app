@@ -16,7 +16,7 @@ const parseAmountInput = (value: string) => {
 export default function BonusCalculator() {
     const [husbandBonus, setHusbandBonus] = useState(100000);
     const [wifeBonus, setWifeBonus] = useState(500000);
-    const [savingsGoalManYen, setSavingsGoalManYen] = useState(30);
+    const [savingsGoalManYen, setSavingsGoalManYen] = useState(10);
     const savingsGoal = savingsGoalManYen * YEN_PER_MAN_YEN;
     const summary = calculateBonusSavings(husbandBonus, wifeBonus, savingsGoal);
 
