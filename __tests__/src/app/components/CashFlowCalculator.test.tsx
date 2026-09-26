@@ -10,11 +10,17 @@ const budgetItems = [
     {category: 'fixed_cost', item: '食費', amount: 189000, isActive: true},
 ];
 
-const renderCashFlow = () => render(
+const utilityBudgetItems = [
+    {category: 'fixed_cost', item: '光熱費', amount: 20000, isActive: true},
+    {category: 'fixed_cost', item: 'Wi-Fi', amount: 5000, isActive: true},
+    {category: 'fixed_cost', item: '水道代', amount: 4000, isActive: true},
+];
+
+const renderCashFlow = (items = budgetItems) => render(
     <HouseholdDataProvider
         husbandIncomeDefault={240000}
         wifeIncomeDefault={210000}
-        budgetItemsDefault={budgetItems}
+        budgetItemsDefault={items}
     >
         <CashFlowCalculator/>
     </HouseholdDataProvider>,
@@ -34,6 +40,16 @@ function ScreenSwitcher() {
 }
 
 describe('CashFlowCalculator', () => {
+    it('光熱費、Wi-Fi、水道代は夫口座からの支払いを初期値にする', () => {
+        renderCashFlow([...budgetItems, ...utilityBudgetItems]);
+
+        expect(screen.getByLabelText('光熱費の支払元')).toHaveValue('husband');
+        expect(screen.getByLabelText('Wi-Fiの支払元')).toHaveValue('husband');
+        expect(screen.getByLabelText('水道代の支払元')).toHaveValue('husband');
+        expect(screen.getByLabelText('家賃の支払元')).toHaveValue('wife');
+        expect(screen.getByLabelText('日用品の支払元')).toHaveValue('shared');
+    });
+
     it('初期状態から項目ごとに支払元を設定でき、入金額と精算額を表示する', () => {
         const {container} = renderCashFlow();
 
