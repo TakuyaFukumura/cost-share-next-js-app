@@ -37,9 +37,16 @@ export default function CalculationExplanationPage() {
 
                     <FlowConnector/>
 
-                    <FlowNode title="合計収入と収入による負担割合">
-                        <p>合計収入 = 夫の収入 + 妻の収入</p>
-                        <p>各自の負担割合 = 各自の収入 ÷ 合計収入</p>
+                    <FlowNode title="資産形成分を先取り">
+                        <p>各自の負担計算対象収入 = max(0, 手取り月収 - 50,000円)</p>
+                        <p>資産形成分は各自月50,000円を上限に先取りし、共通予算には含めません。</p>
+                    </FlowNode>
+
+                    <FlowConnector/>
+
+                    <FlowNode title="合計負担計算対象収入と負担割合">
+                        <p>合計負担計算対象収入 = 夫 + 妻の負担計算対象収入</p>
+                        <p>各自の負担割合 = 各自の負担計算対象収入 ÷ 合計負担計算対象収入</p>
                     </FlowNode>
 
                     <FlowConnector/>
@@ -65,8 +72,8 @@ export default function CalculationExplanationPage() {
                     <FlowConnector/>
 
                     <FlowNode title="拠出後の残額">
-                        <p>各自の残額 = 各自の収入 - 各自の支出</p>
-                        <p>世帯全体の残額 = 合計収入 - 共通予算合計</p>
+                        <p>各自の残額 = 各自の負担計算対象収入 - 各自の支出</p>
+                        <p>世帯全体の残額 = 合計負担計算対象収入 - 共通予算合計</p>
                     </FlowNode>
                 </div>
             </section>
@@ -75,13 +82,13 @@ export default function CalculationExplanationPage() {
                 <h2 className="mb-2 text-lg font-bold text-gray-900 dark:text-gray-100">補足</h2>
                 <ul className="list-disc space-y-2 pl-5 leading-7 text-gray-700 dark:text-gray-300">
                     <li>
-                        合計収入が0円の場合、0円で割らずに、負担割合・支出・残額をすべて0円として扱います。
+                        合計負担計算対象収入が0円の場合、計算ページでは負担割合・支出・残額をすべて0円として扱います。
                     </li>
                     <li>
-                        片方だけに収入がある場合、その人の収入による負担割合は100%、もう片方は0%です。
+                        「お金の流れ」ページでは、合計負担計算対象収入が0円の場合、負担割合を夫婦で50%ずつにします。
                     </li>
                     <li>
-                        共通予算が合計収入を上回る場合、拠出後の残額がマイナスになることがあります。
+                        共通予算が合計負担計算対象収入を上回る場合、拠出後の残額がマイナスになることがあります。
                     </li>
                 </ul>
             </section>

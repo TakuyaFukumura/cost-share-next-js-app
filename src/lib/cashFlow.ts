@@ -1,4 +1,5 @@
 import type {BudgetCsvRow} from '@/lib/csv';
+import {getIncomeAfterAssetFormation} from './income';
 
 export type PaymentSource = 'husband' | 'wife' | 'shared';
 export type DefaultPaymentSource = Exclude<PaymentSource, 'shared'>;
@@ -33,8 +34,10 @@ export function calculateCashFlow(
     wifeIncome: number,
 ): CashFlowSummary {
     const totalBudget = budgetItems.reduce((sum, item) => sum + item.amount, 0);
-    const totalIncome = husbandIncome + wifeIncome;
-    const husbandRatio = totalIncome === 0 ? 0.5 : husbandIncome / totalIncome;
+    const husbandAvailableIncome = getIncomeAfterAssetFormation(husbandIncome);
+    const wifeAvailableIncome = getIncomeAfterAssetFormation(wifeIncome);
+    const totalIncome = husbandAvailableIncome + wifeAvailableIncome;
+    const husbandRatio = totalIncome === 0 ? 0.5 : husbandAvailableIncome / totalIncome;
     const wifeRatio = 1 - husbandRatio;
     const husbandTarget = Math.round(totalBudget * husbandRatio);
     const wifeTarget = totalBudget - husbandTarget;
@@ -109,7 +112,7 @@ export function calculateCashFlow(
         settlementTo,
         husbandFinalBurden,
         wifeFinalBurden,
-        husbandRemaining: husbandIncome - husbandFinalBurden,
-        wifeRemaining: wifeIncome - wifeFinalBurden,
+        husbandRemaining: husbandAvailableIncome - husbandFinalBurden,
+        wifeRemaining: wifeAvailableIncome - wifeFinalBurden,
     };
 }
