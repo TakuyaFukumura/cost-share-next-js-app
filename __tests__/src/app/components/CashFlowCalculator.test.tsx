@@ -37,7 +37,7 @@ describe('CashFlowCalculator', () => {
     it('初期状態から項目ごとに支払元を設定でき、入金額と精算額を表示する', () => {
         renderCashFlow();
 
-        expect(screen.getByLabelText('家賃の支払元')).toHaveValue('shared');
+        expect(screen.getByLabelText('家賃の支払元')).toHaveValue('wife');
         expect(screen.getByLabelText('日用品の支払元')).toHaveValue('shared');
         expect(screen.getByLabelText('食費の支払元')).toHaveValue('shared');
         fireEvent.change(screen.getByLabelText('家賃の支払元'), {target: {value: 'husband'}});

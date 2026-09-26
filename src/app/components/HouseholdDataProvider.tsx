@@ -42,7 +42,10 @@ export function HouseholdDataProvider({
     const [wifeIncome, setWifeIncome] = useState(wifeIncomeDefault);
     const [budgetItems, setBudgetItems] = useState(budgetItemsDefault);
     const [paymentSources, setPaymentSources] = useState<Record<string, PaymentSource>>(() =>
-        Object.fromEntries(budgetItemsDefault.map((item) => [getBudgetItemKey(item), 'shared'])),
+        Object.fromEntries(budgetItemsDefault.map((item) => [
+            getBudgetItemKey(item),
+            item.item === '家賃' ? 'wife' : 'shared',
+        ])),
     );
 
     const value = useMemo(() => ({
