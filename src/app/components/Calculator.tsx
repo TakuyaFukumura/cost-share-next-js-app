@@ -1,6 +1,8 @@
 'use client';
 
 import {useMemo} from 'react';
+import {getIncomeAfterAssetFormation} from '@/lib/income';
+import AssetFormationSummary from './AssetFormationSummary';
 import {useHouseholdData} from './HouseholdDataProvider';
 
 const formatCurrency = (amount: number) => `${amount.toLocaleString('ja-JP')}円`;
@@ -17,6 +19,8 @@ export default function Calculator() {
         setBudgetItems: setEditableBudgetItems,
     } = useHouseholdData();
     const totalBudget = editableBudgetItems.reduce((sum, item) => sum + item.amount, 0);
+    const husbandAvailableIncome = getIncomeAfterAssetFormation(husbandIncome);
+    const wifeAvailableIncome = getIncomeAfterAssetFormation(wifeIncome);
 
     const handleBudgetAmountChange = (index: number, value: string) => {
         const amount = Math.max(0, Number(value) || 0);
@@ -26,7 +30,7 @@ export default function Calculator() {
     };
 
     const summary = useMemo(() => {
-        const totalIncome = husbandIncome + wifeIncome;
+        const totalIncome = husbandAvailableIncome + wifeAvailableIncome;
         if (totalIncome <= 0) {
             return {
                 husbandRatio: 0,
@@ -39,8 +43,8 @@ export default function Calculator() {
             };
         }
 
-        const husbandRatio = husbandIncome / totalIncome;
-        const wifeRatio = wifeIncome / totalIncome;
+        const husbandRatio = husbandAvailableIncome / totalIncome;
+        const wifeRatio = wifeAvailableIncome / totalIncome;
         const husbandContribution = Math.round(totalBudget * husbandRatio);
 
         return {
@@ -48,11 +52,11 @@ export default function Calculator() {
             wifeRatio,
             husbandContribution,
             wifeContribution: totalBudget - husbandContribution,
-            husbandRemaining: husbandIncome - husbandContribution,
-            wifeRemaining: wifeIncome - (totalBudget - husbandContribution),
+            husbandRemaining: husbandAvailableIncome - husbandContribution,
+            wifeRemaining: wifeAvailableIncome - (totalBudget - husbandContribution),
             totalRemaining: totalIncome - totalBudget,
         };
-    }, [husbandIncome, totalBudget, wifeIncome]);
+    }, [husbandAvailableIncome, totalBudget, wifeAvailableIncome]);
 
     return (
         <div className="max-w-3xl mx-auto p-4 md:p-8">
@@ -81,11 +85,9 @@ export default function Calculator() {
                             />
                         </label>
                     </div>
-                    <div className="border-t mt-4 pt-4 font-semibold flex justify-between">
-                        <span>合計</span>
-                        <span className="text-lg text-blue-600 dark:text-blue-400">{formatCurrency(husbandIncome + wifeIncome)}</span>
-                    </div>
                 </section>
+
+                <AssetFormationSummary husbandIncome={husbandIncome} wifeIncome={wifeIncome}/>
 
                 <section className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
                     <h2 className="text-xl font-semibold mb-4">共通予算</h2>
@@ -135,11 +137,11 @@ export default function Calculator() {
                     <div className="grid md:grid-cols-2 gap-4">
                         <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
                             <h3 className="font-medium mb-2">夫</h3>
-                            <p>収入 - 支出：<span className={getAmountColorClass(summary.husbandRemaining)}>{formatCurrency(summary.husbandRemaining)}</span></p>
+                            <p>資産形成分控除後の収入 - 支出：<span className={getAmountColorClass(summary.husbandRemaining)}>{formatCurrency(summary.husbandRemaining)}</span></p>
                         </div>
                         <div className="rounded-lg border border-gray-200 dark:border-gray-700 p-4">
                             <h3 className="font-medium mb-2">妻</h3>
-                            <p>収入 - 支出：<span className={getAmountColorClass(summary.wifeRemaining)}>{formatCurrency(summary.wifeRemaining)}</span></p>
+                            <p>資産形成分控除後の収入 - 支出：<span className={getAmountColorClass(summary.wifeRemaining)}>{formatCurrency(summary.wifeRemaining)}</span></p>
                         </div>
                     </div>
                     <div className="border-t mt-4 pt-4 font-semibold flex justify-between">

@@ -25,7 +25,8 @@ income_sample,夫基本手取り,230000,false
         const budgetData = await loadBudgetData();
 
         expect(budgetData.activeBudgetRows.find((row) => row.item === '家賃')?.amount).toBe(90000);
-        expect(budgetData.totalBudget).toBe(299000);
+        expect(budgetData.totalBudget).toBe(199000);
+        expect(budgetData.activeBudgetRows.some((row) => row.item === '資産形成')).toBe(false);
         expect(budgetData.husbandIncomeDefault).toBe(240000);
         expect(budgetData.wifeIncomeDefault).toBe(210000);
     });

@@ -22,7 +22,7 @@ describe('解説ページ', () => {
         expect(screen.getByRole('heading', {name: '計算のしくみ'})).toBeInTheDocument();
         expect(screen.getByText('共通予算を収入割合で分ける')).toBeInTheDocument();
         expect(screen.getByText('夫の支出 = round(共通予算合計 × 夫の負担割合)')).toBeInTheDocument();
-        expect(screen.getByText(/合計収入が0円の場合/)).toBeInTheDocument();
+        expect(screen.getAllByText(/合計負担計算対象収入が0円の場合/)).toHaveLength(2);
         expect(screen.getByRole('link', {name: '解説一覧に戻る'}))
             .toHaveAttribute('href', '/explanation');
     });

@@ -2,6 +2,7 @@
 
 import {useMemo} from 'react';
 import {calculateCashFlow, getBudgetItemKey, type PaymentSource} from '@/lib/cashFlow';
+import AssetFormationSummary from './AssetFormationSummary';
 import {useHouseholdData} from './HouseholdDataProvider';
 
 const formatCurrency = (amount: number) => `${amount.toLocaleString('ja-JP')}円`;
@@ -85,13 +86,9 @@ export default function CashFlowCalculator() {
                         </span>
                     </label>
                 </div>
-                <div className="mt-4 flex justify-between border-t pt-4 font-semibold">
-                    <span>世帯収入合計</span>
-                    <span className="text-lg text-blue-600 dark:text-blue-400">
-                        {formatCurrency(husbandIncome + wifeIncome)}
-                    </span>
-                </div>
             </section>
+
+            <AssetFormationSummary husbandIncome={husbandIncome} wifeIncome={wifeIncome}/>
 
             <section className="rounded-xl bg-white p-6 shadow dark:bg-gray-800">
                 <h2 className="mb-2 text-xl font-semibold">共通予算と支払元</h2>
@@ -228,8 +225,8 @@ export default function CashFlowCalculator() {
                     <section className="rounded-xl bg-white p-6 shadow dark:bg-gray-800">
                         <h2 className="mb-4 text-xl font-semibold">精算後の残額</h2>
                         <div className="grid gap-4 md:grid-cols-2">
-                            <PersonAmount name="夫" label="手取り収入 - 最終負担額" amount={summary.husbandRemaining}/>
-                            <PersonAmount name="妻" label="手取り収入 - 最終負担額" amount={summary.wifeRemaining}/>
+                            <PersonAmount name="夫" label="資産形成分控除後の収入 - 最終負担額" amount={summary.husbandRemaining}/>
+                            <PersonAmount name="妻" label="資産形成分控除後の収入 - 最終負担額" amount={summary.wifeRemaining}/>
                         </div>
                     </section>
             </>

@@ -35,11 +35,13 @@ function ScreenSwitcher() {
 
 describe('CashFlowCalculator', () => {
     it('初期状態から項目ごとに支払元を設定でき、入金額と精算額を表示する', () => {
-        renderCashFlow();
+        const {container} = renderCashFlow();
 
         expect(screen.getByLabelText('家賃の支払元')).toHaveValue('wife');
         expect(screen.getByLabelText('日用品の支払元')).toHaveValue('shared');
         expect(screen.getByLabelText('食費の支払元')).toHaveValue('shared');
+        expect([...container.querySelectorAll('section > h2')].slice(0, 3).map((heading) => heading.textContent))
+            .toEqual(['手取り月収', '資産形成分を先取り', '共通予算と支払元']);
         fireEvent.change(screen.getByLabelText('家賃の支払元'), {target: {value: 'husband'}});
         fireEvent.change(screen.getByLabelText('日用品の支払元'), {target: {value: 'wife'}});
 
@@ -62,7 +64,7 @@ describe('CashFlowCalculator', () => {
         );
 
         fireEvent.change(screen.getByLabelText('夫の手取り月収'), {target: {value: '250000'}});
-        expect(screen.getByText('負担割合：54.3%')).toBeInTheDocument();
+        expect(screen.getByText('負担割合：55.6%')).toBeInTheDocument();
 
         fireEvent.change(screen.getAllByLabelText('家賃の予算')[0], {target: {value: '100000'}});
         expect(screen.getAllByLabelText('家賃の予算')).toHaveLength(2);
