@@ -93,7 +93,8 @@ export default function CashFlowCalculator() {
             <section className="rounded-xl bg-white p-6 shadow dark:bg-gray-800">
                 <h2 className="mb-2 text-xl font-semibold">共通予算と支払元</h2>
                 <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
-                    各項目の支払元を個別に設定できます。初期設定は家賃が妻口座、その他は共通口座です。
+                    各項目の支払元を個別に設定できます。初期設定では家賃を妻口座、光熱費・Wi-Fi・水道代を夫口座、
+                    その他を共通口座にしています。
                 </p>
 
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700">

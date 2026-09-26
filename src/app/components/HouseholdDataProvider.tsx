@@ -44,7 +44,11 @@ export function HouseholdDataProvider({
     const [paymentSources, setPaymentSources] = useState<Record<string, PaymentSource>>(() =>
         Object.fromEntries(budgetItemsDefault.map((item) => [
             getBudgetItemKey(item),
-            item.item === '家賃' ? 'wife' : 'shared',
+            item.item === '家賃'
+                ? 'wife'
+                : ['光熱費', 'Wi-Fi', '水道代'].includes(item.item)
+                    ? 'husband'
+                    : 'shared',
         ])),
     );
 
