@@ -1,6 +1,7 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
 import Calculator from '@/app/components/Calculator';
+import {HouseholdDataProvider} from '@/app/components/HouseholdDataProvider';
 
 const hasTextContent = (text: string) => (_: string, element: Element | null) => element?.textContent === text;
 
@@ -14,8 +15,21 @@ describe('Calculator', () => {
         wifeIncomeDefault: 200000,
     };
 
+    const renderCalculator = (overrides: Partial<typeof props> = {}) => {
+        const calculatorProps = {...props, ...overrides};
+        return render(
+            <HouseholdDataProvider
+                husbandIncomeDefault={calculatorProps.husbandIncomeDefault}
+                wifeIncomeDefault={calculatorProps.wifeIncomeDefault}
+                budgetItemsDefault={calculatorProps.budgetItems}
+            >
+                <Calculator/>
+            </HouseholdDataProvider>,
+        );
+    };
+
     it('初期値から負担割合と支出を表示する', () => {
-        render(<Calculator {...props} />);
+        renderCalculator();
 
         expect(screen.getByDisplayValue('230000')).toBeInTheDocument();
         expect(screen.getByLabelText('家賃の予算')).toHaveValue(150000);
@@ -30,7 +44,7 @@ describe('Calculator', () => {
     });
 
     it('入力変更時に計算結果をリアルタイム更新する', () => {
-        render(<Calculator {...props} />);
+        renderCalculator();
 
         const husbandInput = screen.getByLabelText('夫');
         const wifeInput = screen.getByLabelText('妻');
@@ -43,7 +57,7 @@ describe('Calculator', () => {
     });
 
     it('共通予算の金額変更を合計と計算結果へ反映する', () => {
-        render(<Calculator {...props} />);
+        renderCalculator();
 
         fireEvent.change(screen.getByLabelText('家賃の予算'), {target: {value: '200000'}});
 
@@ -54,15 +68,12 @@ describe('Calculator', () => {
     });
 
     it('食費を含む共通予算全体を収入割合で計算する', () => {
-        render(
-            <Calculator
-                {...props}
-                budgetItems={[
+        renderCalculator({
+                budgetItems: [
                     {category: 'fixed_cost', item: '食費', amount: 50000, isActive: true},
                     {category: 'fixed_cost', item: '家賃', amount: 150000, isActive: true},
-                ]}
-            />,
-        );
+                ],
+            });
 
         expect(screen.queryByText('食費負担割合')).not.toBeInTheDocument();
         expect(screen.queryByRole('checkbox', {name: '食費負担割合を個別に設定'})).not.toBeInTheDocument();
@@ -71,13 +82,11 @@ describe('Calculator', () => {
     });
 
     it('端数丸めが発生しても支出合計が予算合計と一致する', () => {
-        render(
-            <Calculator
-                budgetItems={[{category: 'other', item: 'テスト', amount: 1, isActive: true}]}
-                husbandIncomeDefault={1}
-                wifeIncomeDefault={1}
-            />,
-        );
+        renderCalculator({
+            budgetItems: [{category: 'other', item: 'テスト', amount: 1, isActive: true}],
+            husbandIncomeDefault: 1,
+            wifeIncomeDefault: 1,
+        });
 
         expect(screen.getByText(hasTextContent('支出：1円'))).toBeInTheDocument();
         expect(screen.getByText(hasTextContent('支出：0円'))).toBeInTheDocument();

@@ -57,6 +57,12 @@ describe('Header', () => {
 
             expect(screen.getByRole('link', {name: 'ボーナス計算'})).toHaveAttribute('href', '/bonus');
         });
+
+        it('お金の流れページへのリンクが表示される', () => {
+            renderWithProvider();
+
+            expect(screen.getByRole('link', {name: 'お金の流れ'})).toHaveAttribute('href', '/cash-flow');
+        });
     });
 
     describe('ライトモード', () => {
