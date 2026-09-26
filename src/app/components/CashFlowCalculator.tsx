@@ -9,8 +9,6 @@ const getAmountColorClass = (amount: number) =>
     amount < 0 ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-gray-100';
 const isPaymentSource = (value: string): value is PaymentSource =>
     value === 'husband' || value === 'wife' || value === 'shared';
-const isDefaultPaymentSource = (value: string): value is 'husband' | 'wife' =>
-    value === 'husband' || value === 'wife';
 
 const parseNonNegativeAmount = (value: string) => {
     const amount = Number(value);
@@ -27,15 +25,12 @@ export default function CashFlowCalculator() {
         setBudgetItems,
         paymentSources,
         setPaymentSources,
-        defaultPaymentSource,
-        setDefaultPaymentSource,
     } = useHouseholdData();
 
-    const summary = useMemo(() => (
-        paymentSources
-            ? calculateCashFlow(budgetItems, paymentSources, husbandIncome, wifeIncome)
-            : null
-    ), [budgetItems, husbandIncome, paymentSources, wifeIncome]);
+    const summary = useMemo(
+        () => calculateCashFlow(budgetItems, paymentSources, husbandIncome, wifeIncome),
+        [budgetItems, husbandIncome, paymentSources, wifeIncome],
+    );
 
     const handleBudgetAmountChange = (index: number, value: string) => {
         const amount = parseNonNegativeAmount(value);
@@ -44,36 +39,13 @@ export default function CashFlowCalculator() {
         ));
     };
 
-    const applyDefaultPaymentSource = () => {
-        const nextSources = Object.fromEntries(
-            budgetItems.map((item) => [getBudgetItemKey(item), defaultPaymentSource]),
-        );
-        const hasOverrides = paymentSources
-            && budgetItems.some((item) => paymentSources[getBudgetItemKey(item)] !== defaultPaymentSource);
-
-        if (hasOverrides && !window.confirm('項目ごとの支払元設定をすべて上書きします。続けますか？')) {
-            return;
-        }
-
-        setPaymentSources(nextSources);
-    };
-
     const handlePaymentSourceChange = (key: string, source: PaymentSource) => {
-        if (!paymentSources) {
-            return;
-        }
         setPaymentSources({...paymentSources, [key]: source});
     };
 
-    const husbandItems = paymentSources
-        ? budgetItems.filter((item) => paymentSources[getBudgetItemKey(item)] === 'husband')
-        : [];
-    const wifeItems = paymentSources
-        ? budgetItems.filter((item) => paymentSources[getBudgetItemKey(item)] === 'wife')
-        : [];
-    const sharedItems = paymentSources
-        ? budgetItems.filter((item) => paymentSources[getBudgetItemKey(item)] === 'shared')
-        : [];
+    const husbandItems = budgetItems.filter((item) => paymentSources[getBudgetItemKey(item)] === 'husband');
+    const wifeItems = budgetItems.filter((item) => paymentSources[getBudgetItemKey(item)] === 'wife');
+    const sharedItems = budgetItems.filter((item) => paymentSources[getBudgetItemKey(item)] === 'shared');
 
     return (
         <div className="mx-auto max-w-6xl space-y-6 p-4 md:p-8">
@@ -124,40 +96,13 @@ export default function CashFlowCalculator() {
             <section className="rounded-xl bg-white p-6 shadow dark:bg-gray-800">
                 <h2 className="mb-2 text-xl font-semibold">共通予算と支払元</h2>
                 <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
-                    初期担当を全項目に適用してから、実際の支払元に合わせて項目ごとに変更できます。
+                    各項目の支払元を個別に設定できます。初期設定は共通口座です。
                 </p>
-                <div className="mb-5 flex flex-col gap-3 rounded-lg bg-gray-50 p-4 dark:bg-gray-900 sm:flex-row sm:items-end">
-                    <label className="flex flex-1 flex-col gap-2">
-                        <span className="text-sm font-medium">初期担当者</span>
-                        <select
-                            aria-label="初期担当者"
-                            value={defaultPaymentSource}
-                            onChange={(event) => {
-                                if (isDefaultPaymentSource(event.target.value)) {
-                                    setDefaultPaymentSource(event.target.value);
-                                }
-                            }}
-                            className="rounded border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-800"
-                        >
-                            <option value="husband">夫</option>
-                            <option value="wife">妻</option>
-                        </select>
-                    </label>
-                    <button
-                        type="button"
-                        onClick={applyDefaultPaymentSource}
-                        className="rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors
-                            hover:bg-blue-700 focus-visible:outline focus-visible:outline-2
-                            focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                    >
-                        全項目に適用
-                    </button>
-                </div>
 
                 <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                     {budgetItems.map((item, index) => {
                         const key = getBudgetItemKey(item);
-                        const source = paymentSources?.[key];
+                        const source = paymentSources[key];
 
                         return (
                             <li key={key} className="grid gap-3 py-3 sm:grid-cols-[1fr_9rem_12rem] sm:items-center">
@@ -175,30 +120,24 @@ export default function CashFlowCalculator() {
                                     />
                                     <span>円</span>
                                 </label>
-                                {paymentSources ? (
-                                    <label className="flex items-center gap-2">
-                                        <span className="sr-only">{item.item}の支払元</span>
-                                        <select
-                                            aria-label={`${item.item}の支払元`}
-                                            value={source ?? ''}
-                                            onChange={(event) => {
-                                                if (isPaymentSource(event.target.value)) {
-                                                    handlePaymentSourceChange(key, event.target.value);
-                                                }
-                                            }}
-                                            className="w-full rounded border border-gray-300 bg-white px-3 py-2
-                                                dark:border-gray-600 dark:bg-gray-900"
-                                        >
-                                            <option value="husband">夫口座</option>
-                                            <option value="wife">妻口座</option>
-                                            <option value="shared">共通口座</option>
-                                        </select>
-                                    </label>
-                                ) : (
-                                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                                        支払元は一括適用後に設定できます
-                                    </span>
-                                )}
+                                <label className="flex items-center gap-2">
+                                    <span className="sr-only">{item.item}の支払元</span>
+                                    <select
+                                        aria-label={`${item.item}の支払元`}
+                                        value={source}
+                                        onChange={(event) => {
+                                            if (isPaymentSource(event.target.value)) {
+                                                handlePaymentSourceChange(key, event.target.value);
+                                            }
+                                        }}
+                                        className="w-full rounded border border-gray-300 bg-white px-3 py-2
+                                            dark:border-gray-600 dark:bg-gray-900"
+                                    >
+                                        <option value="husband">夫口座</option>
+                                        <option value="wife">妻口座</option>
+                                        <option value="shared">共通口座</option>
+                                    </select>
+                                </label>
                             </li>
                         );
                     })}
@@ -209,13 +148,7 @@ export default function CashFlowCalculator() {
                 </div>
             </section>
 
-            {!paymentSources || !summary ? (
-                <p className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-blue-900 dark:border-blue-900
-                    dark:bg-blue-950 dark:text-blue-100" role="status">
-                    初期担当者を選び、「全項目に適用」を押すと、お金の流れと拠出額を表示します。
-                </p>
-            ) : (
-                <>
+            <>
                     <section className="rounded-xl bg-white p-6 shadow dark:bg-gray-800">
                         <h2 className="mb-4 text-xl font-semibold">お金の流れ</h2>
                         <div className="space-y-3" role="list" aria-label="家計のお金の流れ">
@@ -299,8 +232,7 @@ export default function CashFlowCalculator() {
                             <PersonAmount name="妻" label="手取り収入 - 最終負担額" amount={summary.wifeRemaining}/>
                         </div>
                     </section>
-                </>
-            )}
+            </>
         </div>
     );
 }

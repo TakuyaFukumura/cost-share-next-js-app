@@ -34,16 +34,19 @@ function ScreenSwitcher() {
 }
 
 describe('CashFlowCalculator', () => {
-    it('支払元を設定し、入金額と精算額を表示する', () => {
+    it('初期状態から項目ごとに支払元を設定でき、入金額と精算額を表示する', () => {
         renderCashFlow();
 
-        expect(screen.getByRole('status')).toHaveTextContent('初期担当者を選び');
-        fireEvent.click(screen.getByRole('button', {name: '全項目に適用'}));
-        fireEvent.change(screen.getByLabelText('家賃の支払元'), {target: {value: 'shared'}});
-
-        expect(screen.getByText('共通口座から支払う項目：家賃')).toBeInTheDocument();
         expect(screen.getByLabelText('家賃の支払元')).toHaveValue('shared');
-        expect(screen.getByRole('status')).toHaveTextContent('妻から夫へ49,533円を精算します');
+        expect(screen.getByLabelText('日用品の支払元')).toHaveValue('shared');
+        expect(screen.getByLabelText('食費の支払元')).toHaveValue('shared');
+        fireEvent.change(screen.getByLabelText('家賃の支払元'), {target: {value: 'husband'}});
+        fireEvent.change(screen.getByLabelText('日用品の支払元'), {target: {value: 'wife'}});
+
+        expect(screen.getByText('夫が直接払う項目：家賃')).toBeInTheDocument();
+        expect(screen.getByText('妻が直接払う項目：日用品')).toBeInTheDocument();
+        expect(screen.getByText('共通口座から支払う項目：食費')).toBeInTheDocument();
+        expect(screen.getByRole('status')).toHaveTextContent('追加の夫婦間精算はありません');
     });
 
     it('既存計算画面との間で収入と予算を共有する', () => {
@@ -84,7 +87,6 @@ describe('CashFlowCalculator', () => {
 
         expect(screen.getByLabelText('夫の手取り月収')).toHaveValue(250000);
         expect(screen.getByLabelText('家賃の予算')).toHaveValue(100000);
-        fireEvent.click(screen.getByRole('button', {name: '全項目に適用'}));
         fireEvent.change(screen.getByLabelText('家賃の支払元'), {target: {value: 'shared'}});
         fireEvent.click(screen.getByRole('button', {name: '計算画面へ'}));
         fireEvent.click(screen.getByRole('button', {name: 'お金の流れへ'}));
@@ -93,17 +95,14 @@ describe('CashFlowCalculator', () => {
         expect(screen.getByLabelText('家賃の支払元')).toHaveValue('shared');
     });
 
-    it('再適用で個別設定を上書きする前に確認する', () => {
-        const confirm = jest.spyOn(window, 'confirm').mockReturnValue(false);
+    it('項目ごとの支払元変更はほかの項目に影響しない', () => {
         renderCashFlow();
 
-        fireEvent.click(screen.getByRole('button', {name: '全項目に適用'}));
         fireEvent.change(screen.getByLabelText('家賃の支払元'), {target: {value: 'shared'}});
-        fireEvent.change(screen.getByLabelText('初期担当者'), {target: {value: 'wife'}});
-        fireEvent.click(screen.getByRole('button', {name: '全項目に適用'}));
+        fireEvent.change(screen.getByLabelText('日用品の支払元'), {target: {value: 'husband'}});
 
-        expect(confirm).toHaveBeenCalled();
         expect(screen.getByLabelText('家賃の支払元')).toHaveValue('shared');
-        confirm.mockRestore();
+        expect(screen.getByLabelText('日用品の支払元')).toHaveValue('husband');
+        expect(screen.getByLabelText('食費の支払元')).toHaveValue('shared');
     });
 });

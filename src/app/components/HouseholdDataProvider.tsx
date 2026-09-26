@@ -10,7 +10,7 @@ import {
     type SetStateAction,
 } from 'react';
 import type {BudgetCsvRow} from '@/lib/csv';
-import type {DefaultPaymentSource, PaymentSource} from '@/lib/cashFlow';
+import {getBudgetItemKey, type PaymentSource} from '@/lib/cashFlow';
 
 interface HouseholdDataContextValue {
     husbandIncome: number;
@@ -19,10 +19,8 @@ interface HouseholdDataContextValue {
     setWifeIncome: Dispatch<SetStateAction<number>>;
     budgetItems: BudgetCsvRow[];
     setBudgetItems: Dispatch<SetStateAction<BudgetCsvRow[]>>;
-    paymentSources: Record<string, PaymentSource> | null;
+    paymentSources: Record<string, PaymentSource>;
     setPaymentSources: (sources: Record<string, PaymentSource>) => void;
-    defaultPaymentSource: DefaultPaymentSource;
-    setDefaultPaymentSource: (source: DefaultPaymentSource) => void;
 }
 
 interface HouseholdDataProviderProps {
@@ -43,8 +41,9 @@ export function HouseholdDataProvider({
     const [husbandIncome, setHusbandIncome] = useState(husbandIncomeDefault);
     const [wifeIncome, setWifeIncome] = useState(wifeIncomeDefault);
     const [budgetItems, setBudgetItems] = useState(budgetItemsDefault);
-    const [paymentSources, setPaymentSources] = useState<Record<string, PaymentSource> | null>(null);
-    const [defaultPaymentSource, setDefaultPaymentSource] = useState<DefaultPaymentSource>('husband');
+    const [paymentSources, setPaymentSources] = useState<Record<string, PaymentSource>>(() =>
+        Object.fromEntries(budgetItemsDefault.map((item) => [getBudgetItemKey(item), 'shared'])),
+    );
 
     const value = useMemo(() => ({
         husbandIncome,
@@ -55,9 +54,7 @@ export function HouseholdDataProvider({
         setBudgetItems,
         paymentSources,
         setPaymentSources,
-        defaultPaymentSource,
-        setDefaultPaymentSource,
-    }), [husbandIncome, wifeIncome, budgetItems, paymentSources, defaultPaymentSource]);
+    }), [husbandIncome, wifeIncome, budgetItems, paymentSources]);
 
     return (
         <HouseholdDataContext.Provider value={value}>
