@@ -31,6 +31,12 @@ describe('Header', () => {
             expect(screen.getByText('cost-share')).toBeInTheDocument();
         });
 
+        it('家計負担割合計算ページへのリンクが表示される', () => {
+            renderWithProvider();
+
+            expect(screen.getByRole('link', {name: '負担割合'})).toHaveAttribute('href', '/');
+        });
+
         it('ヘッダーのHTML構造が正しい', () => {
             renderWithProvider();
 
@@ -52,10 +58,10 @@ describe('Header', () => {
             expect(screen.getByRole('link', {name: '解説'})).toHaveAttribute('href', '/explanation');
         });
 
-        it('ボーナス計算ページへのリンクが表示される', () => {
+        it('ボーナスページへのリンクが表示される', () => {
             renderWithProvider();
 
-            expect(screen.getByRole('link', {name: 'ボーナス計算'})).toHaveAttribute('href', '/bonus');
+            expect(screen.getByRole('link', {name: 'ボーナス'})).toHaveAttribute('href', '/bonus');
         });
 
         it('お金の流れページへのリンクが表示される', () => {
