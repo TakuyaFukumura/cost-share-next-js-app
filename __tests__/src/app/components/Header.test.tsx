@@ -45,6 +45,13 @@ describe('Header', () => {
             expect(header.tagName).toBe('HEADER');
         });
 
+        it('メニューリンクが指定された順に表示される', () => {
+            renderWithProvider();
+
+            const links = screen.getAllByRole('link').map((link) => link.textContent?.trim());
+            expect(links).toEqual(['cost-share', '負担割合', 'キャッシュフロー', 'ボーナス', '解説']);
+        });
+
         it('テーマ切り替えボタンが表示される', () => {
             renderWithProvider();
 

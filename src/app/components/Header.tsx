@@ -58,12 +58,13 @@ export default function Header() {
                             負担割合
                         </Link>
                         <Link
-                            href="/explanation"
-                            className="rounded-lg px-2 py-2 text-sm font-medium text-gray-700 sm:px-3
+                            href="/cash-flow"
+                            aria-label="キャッシュフロー"
+                            className="rounded-lg px-1 py-2 text-sm font-medium text-gray-700 sm:px-3
                             transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300
                             dark:hover:bg-gray-700"
                         >
-                            解説
+                            キャッシュフロー
                         </Link>
                         <Link
                             href="/bonus"
@@ -75,13 +76,12 @@ export default function Header() {
                             ボーナス
                         </Link>
                         <Link
-                            href="/cash-flow"
-                            aria-label="キャッシュフロー"
-                            className="rounded-lg px-1 py-2 text-sm font-medium text-gray-700 sm:px-3
+                            href="/explanation"
+                            className="rounded-lg px-2 py-2 text-sm font-medium text-gray-700 sm:px-3
                             transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300
                             dark:hover:bg-gray-700"
                         >
-                            キャッシュフロー
+                            解説
                         </Link>
                     </div>
 
