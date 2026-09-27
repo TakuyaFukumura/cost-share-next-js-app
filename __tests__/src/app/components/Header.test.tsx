@@ -64,10 +64,10 @@ describe('Header', () => {
             expect(screen.getByRole('link', {name: 'ボーナス'})).toHaveAttribute('href', '/bonus');
         });
 
-        it('お金の流れページへのリンクが表示される', () => {
+        it('キャッシュフローページへのリンクが表示される', () => {
             renderWithProvider();
 
-            expect(screen.getByRole('link', {name: 'お金の流れ'})).toHaveAttribute('href', '/cash-flow');
+            expect(screen.getByRole('link', {name: 'キャッシュフロー'})).toHaveAttribute('href', '/cash-flow');
         });
     });
 

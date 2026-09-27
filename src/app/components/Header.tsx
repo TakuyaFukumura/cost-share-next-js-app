@@ -76,13 +76,12 @@ export default function Header() {
                         </Link>
                         <Link
                             href="/cash-flow"
-                            aria-label="お金の流れ"
+                            aria-label="キャッシュフロー"
                             className="rounded-lg px-1 py-2 text-sm font-medium text-gray-700 sm:px-3
                             transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300
                             dark:hover:bg-gray-700"
                         >
-                            <span className="sm:hidden">流れ</span>
-                            <span className="hidden sm:inline">お金の流れ</span>
+                            キャッシュフロー
                         </Link>
                     </div>
 
