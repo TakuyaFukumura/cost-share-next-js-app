@@ -49,32 +49,39 @@ export default function Header() {
                             cost-share
                         </Link>
                         <Link
+                            href="/"
+                            aria-label="負担割合"
+                            className="rounded-lg px-1 py-2 text-sm font-medium text-gray-700 sm:px-3
+                            transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300
+                            dark:hover:bg-gray-700"
+                        >
+                            負担割合
+                        </Link>
+                        <Link
+                            href="/cash-flow"
+                            aria-label="キャッシュフロー"
+                            className="rounded-lg px-1 py-2 text-sm font-medium text-gray-700 sm:px-3
+                            transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300
+                            dark:hover:bg-gray-700"
+                        >
+                            キャッシュフロー
+                        </Link>
+                        <Link
+                            href="/bonus"
+                            aria-label="ボーナス"
+                            className="rounded-lg px-1 py-2 text-sm font-medium text-gray-700 sm:px-3
+                            transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300
+                            dark:hover:bg-gray-700"
+                        >
+                            ボーナス
+                        </Link>
+                        <Link
                             href="/explanation"
                             className="rounded-lg px-2 py-2 text-sm font-medium text-gray-700 sm:px-3
                             transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300
                             dark:hover:bg-gray-700"
                         >
                             解説
-                        </Link>
-                        <Link
-                            href="/bonus"
-                            aria-label="ボーナス計算"
-                            className="rounded-lg px-1 py-2 text-sm font-medium text-gray-700 sm:px-3
-                            transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300
-                            dark:hover:bg-gray-700"
-                        >
-                            <span className="sm:hidden">ボーナス</span>
-                            <span className="hidden sm:inline">ボーナス計算</span>
-                        </Link>
-                        <Link
-                            href="/cash-flow"
-                            aria-label="お金の流れ"
-                            className="rounded-lg px-1 py-2 text-sm font-medium text-gray-700 sm:px-3
-                            transition-colors duration-200 hover:bg-gray-100 dark:text-gray-300
-                            dark:hover:bg-gray-700"
-                        >
-                            <span className="sm:hidden">流れ</span>
-                            <span className="hidden sm:inline">お金の流れ</span>
                         </Link>
                     </div>
 

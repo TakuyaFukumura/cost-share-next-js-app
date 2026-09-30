@@ -31,12 +31,25 @@ describe('Header', () => {
             expect(screen.getByText('cost-share')).toBeInTheDocument();
         });
 
+        it('家計負担割合計算ページへのリンクが表示される', () => {
+            renderWithProvider();
+
+            expect(screen.getByRole('link', {name: '負担割合'})).toHaveAttribute('href', '/');
+        });
+
         it('ヘッダーのHTML構造が正しい', () => {
             renderWithProvider();
 
             const header = screen.getByRole('banner');
             expect(header).toBeInTheDocument();
             expect(header.tagName).toBe('HEADER');
+        });
+
+        it('メニューリンクが指定された順に表示される', () => {
+            renderWithProvider();
+
+            const links = screen.getAllByRole('link').map((link) => link.textContent?.trim());
+            expect(links).toEqual(['cost-share', '負担割合', 'キャッシュフロー', 'ボーナス', '解説']);
         });
 
         it('テーマ切り替えボタンが表示される', () => {
@@ -52,16 +65,16 @@ describe('Header', () => {
             expect(screen.getByRole('link', {name: '解説'})).toHaveAttribute('href', '/explanation');
         });
 
-        it('ボーナス計算ページへのリンクが表示される', () => {
+        it('ボーナスページへのリンクが表示される', () => {
             renderWithProvider();
 
-            expect(screen.getByRole('link', {name: 'ボーナス計算'})).toHaveAttribute('href', '/bonus');
+            expect(screen.getByRole('link', {name: 'ボーナス'})).toHaveAttribute('href', '/bonus');
         });
 
-        it('お金の流れページへのリンクが表示される', () => {
+        it('キャッシュフローページへのリンクが表示される', () => {
             renderWithProvider();
 
-            expect(screen.getByRole('link', {name: 'お金の流れ'})).toHaveAttribute('href', '/cash-flow');
+            expect(screen.getByRole('link', {name: 'キャッシュフロー'})).toHaveAttribute('href', '/cash-flow');
         });
     });
 
